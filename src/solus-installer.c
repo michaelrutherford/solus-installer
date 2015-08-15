@@ -2,20 +2,11 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
-static void quit_installer (GApplication *app, gpointer user_data) {
-        g_application_quit (app);
+static void quit_installer (GtkWidget* window, gpointer user_data) {
+        gtk_widget_destroy (window);
 }
 
-static void install_warning (gpointer user_data) {
-        ;
-}
-
-static void activate (GtkApplication* app, gpointer user_data) {
-        GtkWidget *window;
-        GtkWidget *livecd_button;
-        GtkWidget *install_button;
-        GtkWidget *warning_box;
-        GtkWidget *button_box;
+static void install_warning (GtkWidget* window, gpointer user_data) {
         GtkWidget *warning_dialog;
         GtkWidget *warning_text;
 
@@ -29,6 +20,14 @@ static void activate (GtkApplication* app, gpointer user_data) {
                                                       NULL);
         warning_text = gtk_dialog_get_content_area (GTK_DIALOG (warning_dialog));
         g_signal_connect_swapped (warning_dialog, "response", G_CALLBACK (gtk_widget_destroy), warning_dialog);
+        gtk_widget_show_all (warning_dialog);
+}
+
+static void activate (GtkApplication* app, gpointer user_data) {
+        GtkWidget *window;
+        GtkWidget *livecd_button;
+        GtkWidget *install_button;
+        GtkWidget *button_box;
 
         window = gtk_application_window_new (app);
         gtk_window_set_title (GTK_WINDOW (window), "Solus Installer");
@@ -41,11 +40,10 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_SPREAD);
 
         livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
-        g_signal_connect (livecd_button, "clicked", G_CALLBACK (quit_installer), NULL);
-        g_signal_connect_swapped (livecd_button, "clicked", G_CALLBACK (gtk_widget_destroy), NULL);
+        g_signal_connect_swapped (livecd_button, "clicked", G_CALLBACK (quit_installer), window);
 
         install_button = gtk_button_new_with_label ("Install Solus");
-        g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_widget_show), warning_dialog);
+        g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (install_warning), window);
 
         gtk_container_add (GTK_CONTAINER (button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (button_box), install_button);
