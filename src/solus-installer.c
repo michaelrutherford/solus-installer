@@ -20,14 +20,14 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         gtk_container_add (GTK_CONTAINER (window), button_box);
-        gtk_button_box_set_layout (button_box, GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_SPREAD);
 
         livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
         g_signal_connect (livecd_button, "clicked", G_CALLBACK (quit_installer), NULL);
         g_signal_connect_swapped (livecd_button, "clicked", G_CALLBACK (gtk_widget_destroy), NULL);
 
         install_button = gtk_button_new_with_label ("Install Solus");
-        g_signal_connect (install_button, "clicked", G_CALLBACK (quit_installer), NULL);
+        g_signal_connect (install_button, "clicked", G_CALLBACK (gtk_widget_destroy), NULL);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_widget_destroy), NULL);
 
         gtk_container_add (GTK_CONTAINER (button_box), livecd_button);
