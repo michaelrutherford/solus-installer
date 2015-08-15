@@ -20,6 +20,7 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
                                                       NULL);
         warning_text = gtk_dialog_get_content_area (GTK_DIALOG (warning_dialog));
         g_signal_connect_swapped (warning_dialog, "response", G_CALLBACK (gtk_widget_destroy), warning_dialog);
+        
         gtk_widget_show_all (warning_dialog);
 }
 
