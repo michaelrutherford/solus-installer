@@ -1,26 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data) {
         gtk_widget_destroy (window);
+        exit (0);
 }
 
 static void install_warning (GtkWidget* window, gpointer user_data) {
         GtkWidget *warning_dialog;
         GtkWidget *warning_text;
 
-        warning_dialog = gtk_dialog_new_with_buttons ("Warning", 
-                                                      GTK_WINDOW (window), 
-                                                      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                      ("_OK"),
-                                                      GTK_RESPONSE_ACCEPT,
-                                                      ("_CANCEL"),
-                                                      GTK_RESPONSE_REJECT, 
-                                                      NULL);
-        warning_text = gtk_dialog_get_content_area (GTK_DIALOG (warning_dialog));
+        warning_dialog = gtk_message_dialog_new (GTK_WINDOW (window), 
+                                                 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                 GTK_MESSAGE_QUESTION,
+                                                 GTK_BUTTONS_OK_CANCEL,
+                                                 "Installing Solus will override the contents of the disk.");
         g_signal_connect_swapped (warning_dialog, "response", G_CALLBACK (gtk_widget_destroy), warning_dialog);
-        
+
         gtk_widget_show_all (warning_dialog);
 }
 
