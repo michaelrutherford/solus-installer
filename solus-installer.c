@@ -31,8 +31,9 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         window = gtk_application_window_new (app);
         gtk_window_set_title (GTK_WINDOW (window), "Solus Installer");
+        gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-        gtk_window_set_default_size (GTK_WINDOW (window), 750, 750);
+        gtk_window_set_default_size (GTK_WINDOW (window), 1000, 500);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 
         button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
