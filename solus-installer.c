@@ -21,6 +21,35 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
         gtk_widget_show_all (warning_dialog);
 }
 
+static void change_log (GtkWidget* window, gpointer user_data) {
+        GtkWidget *new_dialog;
+
+        new_dialog = gtk_message_dialog_new (GTK_WINDOW (window), 
+                                             GTK_DIALOG_DESTROY_WITH_PARENT,
+                                             GTK_MESSAGE_WARNING,
+                                             GTK_BUTTONS_OK,
+                                             "Everyone likes new things, right? "
+                                             "Well we’ve been getting a lot of software updated lately, " 
+                                             "but realised we hadn’t really told everyone.. "
+                                             "Well, far be it from me to miss an opportunity to brag a lil’.\n\n"
+                                             "- Linux Kernel 4.1.4\n"
+                                             "- Firefox 39.0.3\n"
+                                             "- LibreOffice 5.0.0.5\n\n"
+                                             "We’ve also made a few security updates lately:\n"
+                                             "- WebKitGTK+ updated to 2.8.5 – addressing multiple security concerns\n"
+                                             "- libxml2 – patched CVE-2015-1819\n"
+                                             "- libidn updated to 1.32 – addressing multiple concerns in older versions\n"
+                                             "- kernel – addressed CVE-2015-5697\n\n"
+                                             "Some obligatory mentions for other packages we also have:\n"
+                                             "- rust 1.2.0\n"
+                                             "- Atom 1.0.5\n"
+                                             "- Telegram 0.8.48\n");
+        gtk_window_set_title (GTK_WINDOW (new_dialog), "What's New?");
+        g_signal_connect_swapped (new_dialog, "response", G_CALLBACK (gtk_widget_destroy), new_dialog);
+
+        gtk_widget_show_all (new_dialog);
+}
+
 static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget *window;
         GtkWidget *new_button;
@@ -51,7 +80,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         new_icon = gtk_image_new_from_file ("new.png");
         gtk_button_set_always_show_image (GTK_BUTTON (new_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (new_button), new_icon);
-        g_signal_connect_swapped (new_button, "clicked", G_CALLBACK (quit_installer), window);
+        g_signal_connect_swapped (new_button, "clicked", G_CALLBACK (change_log), window);
 
         install_button = gtk_button_new_with_label ("Install Solus");
         install_icon = gtk_image_new_from_file ("install.png");
