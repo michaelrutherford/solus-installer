@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data);
-static void advance_page (GtkWidget* widget, gpointer user_data);
+static void change_log (GtkWidget* window, gpointer user_data);
 
 static void quit_installer (GtkWidget* window, gpointer user_data) {
         gtk_widget_destroy (window);
@@ -11,8 +11,8 @@ static void quit_installer (GtkWidget* window, gpointer user_data) {
 
 /*
 static void install_warning (GtkWidget* window, gpointer user_data) {
-        GtkWidget *warning_dialog;
-        GtkWidget *warning_text;
+        GtkWidget* warning_dialog;
+        GtkWidget* warning_text;
 
         warning_dialog = gtk_message_dialog_new (GTK_WINDOW (window), 
                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -27,7 +27,7 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 */
 
 static void change_log (GtkWidget* window, gpointer user_data) {
-        GtkWidget *new_dialog;
+        GtkWidget* new_dialog;
 
         new_dialog = gtk_message_dialog_new (GTK_WINDOW (window), 
                                              GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -55,14 +55,10 @@ static void change_log (GtkWidget* window, gpointer user_data) {
         gtk_dialog_run (GTK_DIALOG (new_dialog));
 }
 
-static void advance_page (GtkWidget* notebook, gpointer user_data) {
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-}
-
 static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* window = gtk_application_window_new (app);
         GtkWidget* notebook = gtk_notebook_new ();
-        GtkWidget* new_button =gtk_button_new_with_label ("What's New In Solus?");
+        GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
         GtkWidget* new_icon = gtk_image_new_from_file ("new.png");
         GtkWidget* livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
         GtkWidget* livecd_icon = gtk_image_new_from_file ("live.png");
@@ -70,32 +66,41 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* users_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* welcome_label = gtk_label_new ("Welcome");
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
+        GtkWidget* users_label = gtk_label_new ("Users");
+        GtkWidget* partition_label = gtk_label_new ("Partioning");
 
         gtk_window_set_title (GTK_WINDOW (window), "Solus Installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-        gtk_window_set_default_size (GTK_WINDOW (window), 1250, 500);
+        gtk_window_set_default_size (GTK_WINDOW (window), 750, 350);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
         
         gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 1);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_button_box, users_label, 2);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), partition_button_box, partition_label, 3);
 
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
 
         gtk_button_set_always_show_image (GTK_BUTTON (livecd_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (livecd_button), livecd_icon);
+        gtk_button_set_image_position (GTK_BUTTON (livecd_button), GTK_POS_TOP);
         g_signal_connect_swapped (livecd_button, "clicked", G_CALLBACK (quit_installer), window);
         
         gtk_button_set_always_show_image (GTK_BUTTON (new_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (new_button), new_icon);
+        gtk_button_set_image_position (GTK_BUTTON (new_button), GTK_POS_TOP);
         g_signal_connect_swapped (new_button, "clicked", G_CALLBACK (change_log), window);
 
         gtk_button_set_always_show_image (GTK_BUTTON (install_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (install_button), install_icon);
-        g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (advance_page), notebook);
+        gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
+        g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_notebook_next_page), notebook);
 
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
@@ -106,7 +111,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 }
 
 int main (int argc, char **argv) {
-        GtkApplication *app;
+        GtkApplication* app;
         int status;
         app = gtk_application_new ("com.solus-project.installer", G_APPLICATION_FLAGS_NONE);
         g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
