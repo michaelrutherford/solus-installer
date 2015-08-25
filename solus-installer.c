@@ -9,10 +9,6 @@ static void quit_installer (GtkWidget* window, gpointer user_data) {
         exit (0);
 }
 
-static void date_time (GtkWidget* window, gpointer user_data) {
-        g_print ("Set date and time.");
-}
-
 /*
 static void install_warning (GtkWidget* window, gpointer user_data) {
         GtkWidget *warning_dialog;
@@ -26,7 +22,7 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
         gtk_window_set_title (GTK_WINDOW (warning_dialog), "Warning");
         g_signal_connect_swapped (warning_dialog, "response", G_CALLBACK (gtk_widget_destroy), warning_dialog);
 
-        gtk_widget_show_all (warning_dialog);
+        gtk_dialog_show_all (warning_dialog);
 }
 */
 
@@ -56,7 +52,7 @@ static void change_log (GtkWidget* window, gpointer user_data) {
         gtk_window_set_title (GTK_WINDOW (new_dialog), "What's New?");
         g_signal_connect_swapped (new_dialog, "response", G_CALLBACK (gtk_widget_destroy), new_dialog);
 
-        gtk_widget_show_all (new_dialog);
+        gtk_dialog_run (GTK_DIALOG (new_dialog));
 }
 
 static void advance_page (GtkWidget* notebook, gpointer user_data) {
