@@ -93,9 +93,10 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
         GtkWidget* users_label = gtk_label_new ("Users");
         GtkWidget* partition_label = gtk_label_new ("Partioning");
-	GtkWidget *region_map = cc_timezone_map_new ();
+        
+	CcTimezoneMap *region_map = cc_timezone_map_new ();
 
-        gtk_window_set_title (GTK_WINDOW (window), "Solus Installer");
+        gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
         gtk_window_set_default_size (GTK_WINDOW (window), 750, 350);
