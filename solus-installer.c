@@ -15,6 +15,7 @@
 * You should have received a copy of the GNU General Public License along
 * with solus-installer. If not, see http://www.gnu.org/licenses/.
 */
+
 #include <gtk/gtk.h>
 #include <timezonemap/timezonemap/cc-timezone-map.h>
 #include <timezonemap/timezonemap/cc-timezone-location.h>
@@ -23,6 +24,7 @@
 #include <stdlib.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data);
+static void install_warning (GtkWidget* window, gpointer user_data);
 static void change_log (GtkWidget* window, gpointer user_data);
 
 static void quit_installer (GtkWidget* window, gpointer user_data) {
@@ -30,7 +32,6 @@ static void quit_installer (GtkWidget* window, gpointer user_data) {
         exit (0);
 }
 
-/*
 static void install_warning (GtkWidget* window, gpointer user_data) {
         GtkWidget* warning_dialog;
         GtkWidget* warning_text;
@@ -45,7 +46,6 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 
         gtk_dialog_show_all (warning_dialog);
 }
-*/
 
 static void change_log (GtkWidget* window, gpointer user_data) {
         GtkWidget* new_dialog;
