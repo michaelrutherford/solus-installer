@@ -16,8 +16,11 @@
 * with solus-installer. If not, see http://www.gnu.org/licenses/.
 */
 #include <gtk/gtk.h>
-#include <timezonemap/timezonemap/cc-timezone-map.h>
 #include <stdlib.h>
+#include <timezonemap/timezonemap/cc-timezone-location.h>
+#include <timezonemap/timezonemap/cc-timezone-map.h>
+#include <timezonemap/timezonemap/timezone-completion.h>
+#include <timezonemap/timezonemap/tz.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data);
 static void change_log (GtkWidget* window, gpointer user_data);
