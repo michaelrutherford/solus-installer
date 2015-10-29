@@ -54,22 +54,7 @@ static void change_log (GtkWidget* window, gpointer user_data) {
                                              GTK_DIALOG_DESTROY_WITH_PARENT,
                                              GTK_MESSAGE_WARNING,
                                              GTK_BUTTONS_OK,
-                                             "Everyone likes new things, right? "
-                                             "Well we’ve been getting a lot of software updated lately, " 
-                                             "but realised we hadn’t really told everyone.. "
-                                             "Well, far be it from me to miss an opportunity to brag a lil’.\n\n"
-                                             "- Linux Kernel 4.1.4\n"
-                                             "- Firefox 39.0.3\n"
-                                             "- LibreOffice 5.0.0.5\n\n"
-                                             "We’ve also made a few security updates lately:\n"
-                                             "- WebKitGTK+ updated to 2.8.5 – addressing multiple security concerns\n"
-                                             "- libxml2 – patched CVE-2015-1819\n"
-                                             "- libidn updated to 1.32 – addressing multiple concerns in older versions\n"
-                                             "- kernel – addressed CVE-2015-5697\n\n"
-                                             "Some obligatory mentions for other packages we also have:\n"
-                                             "- Rust 1.2.0\n"
-                                             "- Atom 1.0.5\n"
-                                             "- Telegram 0.8.48\n");
+                                             "Solus Release #");
         gtk_window_set_title (GTK_WINDOW (new_dialog), "What's New?");
         g_signal_connect_swapped (new_dialog, "response", G_CALLBACK (gtk_widget_destroy), new_dialog);
 
