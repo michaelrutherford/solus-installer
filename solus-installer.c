@@ -16,11 +16,11 @@
 * with solus-installer. If not, see http://www.gnu.org/licenses/.
 */
 #include <gtk/gtk.h>
-#include <stdlib.h>
-#include <timezonemap/timezonemap/cc-timezone-location.h>
 #include <timezonemap/timezonemap/cc-timezone-map.h>
+#include <timezonemap/timezonemap/cc-timezone-location.h>
 #include <timezonemap/timezonemap/timezone-completion.h>
 #include <timezonemap/timezonemap/tz.h>
+#include <stdlib.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data);
 static void change_log (GtkWidget* window, gpointer user_data);
@@ -93,6 +93,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
         GtkWidget* users_label = gtk_label_new ("Users");
         GtkWidget* partition_label = gtk_label_new ("Partioning");
+	GtkWidget *region_map = cc_timezone_map_new ();
 
         gtk_window_set_title (GTK_WINDOW (window), "Solus Installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
@@ -107,6 +108,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), partition_button_box, partition_label, 3);
 
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_SPREAD);
 
         gtk_button_set_always_show_image (GTK_BUTTON (livecd_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (livecd_button), livecd_icon);
