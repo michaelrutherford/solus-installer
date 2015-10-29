@@ -64,22 +64,27 @@ static void change_log (GtkWidget* window, gpointer user_data) {
 static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* window = gtk_application_window_new (app);
         GtkWidget* notebook = gtk_notebook_new ();
-        GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
-        GtkWidget* new_icon = gtk_image_new_from_file ("new.png");
-        GtkWidget* livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
-        GtkWidget* livecd_icon = gtk_image_new_from_file ("live.png");
-        GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
-        GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
+        
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* users_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        
         GtkWidget* welcome_label = gtk_label_new ("Welcome");
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
         GtkWidget* users_label = gtk_label_new ("Users");
         GtkWidget* partition_label = gtk_label_new ("Partioning");
         
-	CcTimezoneMap *region_map = cc_timezone_map_new ();
+        GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
+        GtkWidget* new_icon = gtk_image_new_from_file ("new.png");
+        
+        GtkWidget* livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
+        GtkWidget* livecd_icon = gtk_image_new_from_file ("live.png");
+        
+        GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
+        GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
+        
+        GtkWidget* map = (GtkWidget *) cc_timezone_map_new ();
 
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
