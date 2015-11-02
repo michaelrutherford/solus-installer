@@ -17,10 +17,6 @@
 */
 
 #include <gtk/gtk.h>
-#include <timezonemap/timezonemap/cc-timezone-map.h>
-#include <timezonemap/timezonemap/cc-timezone-location.h>
-#include <timezonemap/timezonemap/timezone-completion.h>
-#include <timezonemap/timezonemap/tz.h>
 #include <stdlib.h>
 
 static void quit_installer (GtkWidget* window, gpointer user_data);
@@ -83,8 +79,6 @@ static void activate (GtkApplication* app, gpointer user_data) {
         
         GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
-        
-        GtkWidget* map = (GtkWidget *) cc_timezone_map_new ();
 
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
