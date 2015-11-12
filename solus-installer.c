@@ -28,6 +28,7 @@ static void quit_installer (GtkWidget* window, gpointer user_data) {
         exit (0);
 }
 
+/*
 static void install_warning (GtkWidget* window, gpointer user_data) {
         GtkWidget* warning_dialog;
         GtkWidget* warning_text;
@@ -42,6 +43,7 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 
         gtk_dialog_show_all (warning_dialog);
 }
+*/
 
 static void change_log (GtkWidget* window, gpointer user_data) {
         GtkWidget* new_dialog;
@@ -80,6 +82,12 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
 
+        /*
+        GtkWidget* timezone_menu_button = gtk_menu_button_new ();
+        GtkWidget* timezone_menu = gtk_menu_new ();
+        GtkWidget* timezone_menu_item = gtk_menu_item_new_with_label ("America");
+        */
+
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
@@ -110,10 +118,17 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_notebook_next_page), notebook);
 
+        /*
+        gtk_menu_button_set_popup (GTK_MENU_BUTTON (timezone_menu_button), timezone_menu);
+        gtk_menu_attach (GTK_MENU (timezone_menu), timezone_menu_item, 0, 0, 0, 0);
+        gtk_menu_popup (GTK_MENU (timezone_menu), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time ());
+        */
+        
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
+        //gtk_container_add (GTK_CONTAINER (date_time_button_box), timezone_menu_button);
 
         gtk_widget_show_all (window);
 }
