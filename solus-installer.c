@@ -82,11 +82,16 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
 
-        /*
-        GtkWidget* timezone_menu_button = gtk_menu_button_new ();
-        GtkWidget* timezone_menu = gtk_menu_new ();
-        GtkWidget* timezone_menu_item = gtk_menu_item_new_with_label ("America");
-        */
+        GtkWidget* region_menu_button = gtk_menu_button_new ();
+        GtkWidget* city_menu_button = gtk_menu_button_new ();
+
+        GMenu* region_menu = g_menu_new ();
+        GMenu* city_menu = g_menu_new ();
+
+        GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label ("America");
+        GtkWidget* region_menu_item_not_america = gtk_menu_item_new_with_label ("Everywhere else");
+
+        GtkWidget* region_menu_item_chicago = gtk_menu_item_new_with_label ("Chicago");
 
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
@@ -118,17 +123,18 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_notebook_next_page), notebook);
 
-        /*
-        gtk_menu_button_set_popup (GTK_MENU_BUTTON (timezone_menu_button), timezone_menu);
-        gtk_menu_attach (GTK_MENU (timezone_menu), timezone_menu_item, 0, 0, 0, 0);
-        gtk_menu_popup (GTK_MENU (timezone_menu), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time ());
-        */
-        
+        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (region_menu_button), G_MENU_MODEL (region_menu));
+        g_menu_append (region_menu, "America", "america.region");
+
+        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (city_menu_button), G_MENU_MODEL (city_menu));
+        g_menu_append (city_menu, "Chicago", "chicago.city");
+
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
-        //gtk_container_add (GTK_CONTAINER (date_time_button_box), timezone_menu_button);
+        gtk_container_add (GTK_CONTAINER (date_time_button_box), region_menu_button);
+        gtk_container_add (GTK_CONTAINER (date_time_button_box), city_menu_button);
 
         gtk_widget_show_all (window);
 }
