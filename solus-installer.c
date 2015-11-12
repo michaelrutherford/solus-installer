@@ -97,8 +97,8 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* livecd_icon = gtk_image_new_from_file ("live.png");
         
         //Declaration/instantiation of the install button and the icon
-        GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
+        GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
 
         //Declaration/instantiation of the menu buttons
         GtkWidget* region_menu_button = gtk_menu_button_new ();
