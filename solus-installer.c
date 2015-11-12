@@ -108,13 +108,6 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GMenu* region_menu = g_menu_new ();
         GMenu* city_menu = g_menu_new ();
 
-        //Declaration/instantiation of the region menu items
-        GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label ("America");
-        GtkWidget* region_menu_item_not_america = gtk_menu_item_new_with_label ("Everywhere else");
-
-        //Declaration/instantiation of the city menu items
-        GtkWidget* city_menu_item_chicago = gtk_menu_item_new_with_label ("Chicago");
-
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
@@ -153,11 +146,15 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Adds the region menu to the region menu button and adds regions to the menu
         gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (region_menu_button), G_MENU_MODEL (region_menu));
+        gtk_button_set_label (GTK_BUTTON (region_menu_button), "Region");
         g_menu_append (region_menu, "America", "america.region");
+        g_menu_append (region_menu, "Everywhere else", "everywhere.region");
 
         //Adds the city menu to the city menu button and adds cities to the menu
         gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (city_menu_button), G_MENU_MODEL (city_menu));
+        gtk_button_set_label (GTK_BUTTON (city_menu_button), "City");
         g_menu_append (city_menu, "Chicago", "chicago.city");
+        g_menu_append (city_menu, "Everywhere else", "everywhere.city");
 
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
