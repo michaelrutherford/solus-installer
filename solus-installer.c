@@ -17,6 +17,7 @@
 */
 
 //Imported header files
+#include "solus-installer.h"
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
@@ -120,25 +121,17 @@ static void activate (GtkApplication* app, gpointer user_data) {
                                                                                                  "text",
                                                                                                  CONTINENT_COLUMN,
                                                                                                  NULL);
-        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_continent_column, 0);
-        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_continent_column), TRUE);
-        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_continent_column), 0.5);
         GtkTreeViewColumn* timezone_location_column = gtk_tree_view_column_new_with_attributes ("Location",
                                                                                                 renderer,
                                                                                                 "text",
                                                                                                 LOCATION_COLUMN,
                                                                                                 NULL);
-        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_location_column, 1);
-        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_location_column), TRUE);
-        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_location_column), 0.5);
         GtkTreeViewColumn* timezone_utc_column = gtk_tree_view_column_new_with_attributes ("UTC",
                                                                                            renderer,
                                                                                            "text",
                                                                                            UTC_COLUMN,
                                                                                            NULL);
-        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_utc_column, 2);
-        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_utc_column), TRUE);
-        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_utc_column), 0.5);
+        GtkWidget* list_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
@@ -150,7 +143,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //Sets the tabs positions and adds pages with labels
         gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 1);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), list_scrolled_window, date_time_label, 1);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_button_box, users_label, 2);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), partition_button_box, partition_label, 3);
 
@@ -176,43 +169,36 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_notebook_next_page), notebook);
 
-        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
-        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
-                            CONTINENT_COLUMN, "America",
-                            LOCATION_COLUMN, "Chicago",
-                            UTC_COLUMN, "-5 UTC",
-                            -1);
-        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
-        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
-                            CONTINENT_COLUMN, "America",
-                            LOCATION_COLUMN, "Atlanta",
-                            UTC_COLUMN, "-3 UTC",
-                            -1);
-        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
-        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
-                            CONTINENT_COLUMN, "America",
-                            LOCATION_COLUMN, "New York",
-                            UTC_COLUMN, "-2 UTC",
-                            -1);
-        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
-        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
-                            CONTINENT_COLUMN, "Australia",
-                            LOCATION_COLUMN, "Perth",
-                            UTC_COLUMN, "4 UTC",
-                            -1);
-        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
-        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
-                            CONTINENT_COLUMN, "Europe",
-                            LOCATION_COLUMN, "Dublin",
-                            UTC_COLUMN, "1 UTC",
-                            -1);
+        //Loops 25 times and adds a list item each time
+        for (int count = 0; count < 150; count++) {
+                gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+                gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                                    CONTINENT_COLUMN, "America",
+                                    LOCATION_COLUMN, "Chicago",
+                                    UTC_COLUMN, "-5 UTC",
+                                    -1);
+        }
+
+        //Inserts the tree view columnsand sets properties
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_continent_column, 0);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_continent_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_continent_column), 0.5);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_location_column, 1);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_location_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_location_column), 0.5);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_utc_column, 2);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_utc_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_utc_column), 0.5);
+
+        //Sets properties for the timezone scrolled window
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (list_scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
-        gtk_container_add (GTK_CONTAINER (date_time_button_box), timezone_tree);
+        gtk_container_add (GTK_CONTAINER (list_scrolled_window), timezone_tree);
 
         //Displays the window and all the widgets attached to it
         gtk_widget_show_all (window);
