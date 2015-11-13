@@ -22,7 +22,7 @@
 
 //Function prototypes
 static void quit_installer (GtkWidget* window, gpointer user_data);
-static void install_warning (GtkWidget* window, gpointer user_data);
+//static void install_warning (GtkWidget* window, gpointer user_data);
 static void change_log (GtkWidget* window, gpointer user_data);
 
 //Function to destroy the window so that the installer quits
@@ -78,7 +78,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         
         //Declaration/instantiation of the button boxes
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
         GtkWidget* users_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         
@@ -100,13 +100,45 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
         GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
 
-        //Declaration/instantiation of the menu buttons
-        GtkWidget* region_menu_button = gtk_menu_button_new ();
-        GtkWidget* city_menu_button = gtk_menu_button_new ();
-
-        //Declaration/instantiation of the menus
-        GMenu* region_menu = g_menu_new ();
-        GMenu* city_menu = g_menu_new ();
+        //Declaration/instantiation of the timezone tree and tree store
+        enum {
+                CONTINENT_COLUMN,
+                LOCATION_COLUMN,
+                UTC_COLUMN,
+                N_COLUMNS = 3
+        };
+        GtkListStore* timezone_list_store;
+        timezone_list_store = gtk_list_store_new (N_COLUMNS, 
+                                                  G_TYPE_STRING, 
+                                                  G_TYPE_STRING,
+                                                  G_TYPE_STRING);
+        GtkWidget* timezone_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (timezone_list_store));
+        GtkTreeIter timezone_tree_iter;
+        GtkCellRenderer* renderer = gtk_cell_renderer_text_new ();
+        GtkTreeViewColumn* timezone_continent_column = gtk_tree_view_column_new_with_attributes ("Continent",
+                                                                                                 renderer,
+                                                                                                 "text",
+                                                                                                 CONTINENT_COLUMN,
+                                                                                                 NULL);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_continent_column, 0);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_continent_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_continent_column), 0.5);
+        GtkTreeViewColumn* timezone_location_column = gtk_tree_view_column_new_with_attributes ("Location",
+                                                                                                renderer,
+                                                                                                "text",
+                                                                                                LOCATION_COLUMN,
+                                                                                                NULL);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_location_column, 1);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_location_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_location_column), 0.5);
+        GtkTreeViewColumn* timezone_utc_column = gtk_tree_view_column_new_with_attributes ("UTC",
+                                                                                           renderer,
+                                                                                           "text",
+                                                                                           UTC_COLUMN,
+                                                                                           NULL);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_utc_column, 2);
+        gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_utc_column), TRUE);
+        gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_utc_column), 0.5);
 
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
@@ -124,7 +156,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Sets button box layouts
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_EXPAND);
 
         //Assigns an image to the livecd button and connects an activity to the button 
         gtk_button_set_always_show_image (GTK_BUTTON (livecd_button), TRUE);
@@ -144,25 +176,43 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (gtk_notebook_next_page), notebook);
 
-        //Adds the region menu to the region menu button and adds regions to the menu
-        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (region_menu_button), G_MENU_MODEL (region_menu));
-        gtk_button_set_label (GTK_BUTTON (region_menu_button), "Region");
-        g_menu_append (region_menu, "America", "america.region");
-        g_menu_append (region_menu, "Everywhere else", "everywhere.region");
-
-        //Adds the city menu to the city menu button and adds cities to the menu
-        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (city_menu_button), G_MENU_MODEL (city_menu));
-        gtk_button_set_label (GTK_BUTTON (city_menu_button), "City");
-        g_menu_append (city_menu, "Chicago", "chicago.city");
-        g_menu_append (city_menu, "Everywhere else", "everywhere.city");
+        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                            CONTINENT_COLUMN, "America",
+                            LOCATION_COLUMN, "Chicago",
+                            UTC_COLUMN, "-5 UTC",
+                            -1);
+        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                            CONTINENT_COLUMN, "America",
+                            LOCATION_COLUMN, "Atlanta",
+                            UTC_COLUMN, "-3 UTC",
+                            -1);
+        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                            CONTINENT_COLUMN, "America",
+                            LOCATION_COLUMN, "New York",
+                            UTC_COLUMN, "-2 UTC",
+                            -1);
+        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                            CONTINENT_COLUMN, "Australia",
+                            LOCATION_COLUMN, "Perth",
+                            UTC_COLUMN, "4 UTC",
+                            -1);
+        gtk_list_store_append (timezone_list_store, &timezone_tree_iter);
+        gtk_list_store_set (timezone_list_store, &timezone_tree_iter,
+                            CONTINENT_COLUMN, "Europe",
+                            LOCATION_COLUMN, "Dublin",
+                            UTC_COLUMN, "1 UTC",
+                            -1);
 
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
-        gtk_container_add (GTK_CONTAINER (date_time_button_box), region_menu_button);
-        gtk_container_add (GTK_CONTAINER (date_time_button_box), city_menu_button);
+        gtk_container_add (GTK_CONTAINER (date_time_button_box), timezone_tree);
 
         //Displays the window and all the widgets attached to it
         gtk_widget_show_all (window);
