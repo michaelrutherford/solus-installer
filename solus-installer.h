@@ -19,7 +19,11 @@
 #ifndef solus_installer_h
 #define solus_installer_h
 
-struct timezone {
+#define WIN_X 750
+#define WIN_Y 350
+
+struct timezone 
+{
         char *continent[20];
         char *location[25];
         char *utc[10];
