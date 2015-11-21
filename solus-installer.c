@@ -80,7 +80,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //Declaration/instantiation of the button boxes
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
-        GtkWidget* users_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* users_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
         GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         
         //Declaration/instantiation of the tab labels
@@ -132,24 +132,41 @@ static void activate (GtkApplication* app, gpointer user_data) {
                                                                                            UTC_COLUMN,
                                                                                            NULL);
         GtkWidget* list_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        
+        GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* user_name_label = gtk_label_new ("User Name");
+        GtkWidget* user_name_entry = gtk_entry_new ();
+
+        GtkWidget* full_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* full_name_label = gtk_label_new ("Full Name");
+        GtkWidget* full_name_entry = gtk_entry_new ();
+
+        GtkWidget* password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* password_label = gtk_label_new ("Password");
+        GtkWidget* password_entry = gtk_entry_new ();
+
+        GtkWidget* verify_password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* verify_password_label = gtk_label_new ("Verify Password");
+        GtkWidget* verify_password_entry = gtk_entry_new ();
 
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-        gtk_window_set_default_size (GTK_WINDOW (window), 750, 350);
+        gtk_window_set_default_size (GTK_WINDOW (window), WIN_X, WIN_Y);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
         
         //Sets the tabs positions and adds pages with labels
         gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), list_scrolled_window, date_time_label, 1);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_button_box, users_label, 2);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_box, users_label, 2);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), partition_button_box, partition_label, 3);
 
         //Sets button box layouts
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_EXPAND);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (users_box), GTK_BUTTONBOX_SPREAD);
 
         //Assigns an image to the livecd button and connects an activity to the button 
         gtk_button_set_always_show_image (GTK_BUTTON (livecd_button), TRUE);
@@ -179,7 +196,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
                                     -1);
         }
 
-        //Inserts the tree view columnsand sets properties
+        //Inserts the tree view columns and sets properties
         gtk_tree_view_insert_column (GTK_TREE_VIEW (timezone_tree), timezone_continent_column, 0);
         gtk_tree_view_column_set_expand (GTK_TREE_VIEW_COLUMN (timezone_continent_column), TRUE);
         gtk_tree_view_column_set_alignment (GTK_TREE_VIEW_COLUMN (timezone_continent_column), 0.5);
@@ -193,12 +210,38 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //Sets properties for the timezone scrolled window
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (list_scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 
+        //Sets label properties
+        gtk_label_set_width_chars (GTK_LABEL (user_name_label), 15);
+        gtk_label_set_xalign (GTK_LABEL (user_name_label), 0);
+        gtk_label_set_width_chars (GTK_LABEL (full_name_label), 15);
+        gtk_label_set_xalign (GTK_LABEL (full_name_label), 0); 
+        gtk_label_set_width_chars (GTK_LABEL (password_label), 15);
+        gtk_label_set_xalign (GTK_LABEL (password_label), 0);
+        gtk_label_set_width_chars (GTK_LABEL (verify_password_label), 15);
+        gtk_label_set_xalign (GTK_LABEL (verify_password_label), 0);
+
+        //Removes character visibility from the password entry objects
+        gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
+        gtk_entry_set_visibility (GTK_ENTRY (verify_password_entry), FALSE);
+
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
         gtk_container_add (GTK_CONTAINER (list_scrolled_window), timezone_tree);
+        gtk_container_add (GTK_CONTAINER (user_name_box), user_name_label);
+        gtk_container_add (GTK_CONTAINER (user_name_box), user_name_entry);
+        gtk_container_add (GTK_CONTAINER (users_box), user_name_box);
+        gtk_container_add (GTK_CONTAINER (full_name_box), full_name_label);
+        gtk_container_add (GTK_CONTAINER (full_name_box), full_name_entry);
+        gtk_container_add (GTK_CONTAINER (users_box), full_name_box);
+        gtk_container_add (GTK_CONTAINER (password_box), password_label);
+        gtk_container_add (GTK_CONTAINER (password_box), password_entry);
+        gtk_container_add (GTK_CONTAINER (users_box), password_box);
+        gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_label);
+        gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_entry);
+        gtk_container_add (GTK_CONTAINER (users_box), verify_password_box);
 
         //Displays the window and all the widgets attached to it
         gtk_widget_show_all (window);
