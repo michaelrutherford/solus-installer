@@ -9,7 +9,6 @@ gcc `pkg-config --cflags gtk+-3.0` -o solus-installer solus-installer.c `pkg-con
 ./solus-installer
 
 > To-do
-* Complete the user creation tab.
 * Complete the partitioning tab.
 * Add relevant info to the change-log.
 * Fill out the timezone list entries.
