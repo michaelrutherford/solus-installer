@@ -22,8 +22,7 @@
 #define WIN_X 750
 #define WIN_Y 350
 
-struct timezone 
-{
+struct timezone {
         char *continent[20];
         char *location[25];
         char *utc[10];
