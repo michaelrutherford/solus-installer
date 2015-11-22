@@ -33,14 +33,16 @@ static void password_entered (GtkWidget* window, gpointer user_data);
 static void password_verification_entered (GtkWidget* window, gpointer user_data);
 
 //Function to destroy the window so that the installer quits
-static void quit_installer_clicked (GtkWidget* window, gpointer user_data) {
+static void quit_installer_clicked (GtkWidget* window, gpointer user_data)
+{
         printf ("Quit installer clicked.\n");
         gtk_widget_destroy (window);
         exit (0);
 }
 
 //Function to display changelog for Solus
-static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
+static void whats_new_clicked (GtkWidget* window, gpointer user_data)
+{
         printf ("What's new clicked.\n");
         gint status;
 
@@ -62,39 +64,46 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
 }
 
 //Function to destroy the window so that the installer quits
-static void install_solus_clicked (GtkWidget* notebook, gpointer user_data) {
+static void install_solus_clicked (GtkWidget* notebook, gpointer user_data)
+{
         printf ("Install Solus clicked.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the region is entered
-static void region_entered (GtkWidget* window, gpointer user_data) {
+static void region_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Region entered.\n");
 }
 
 //Function to handle when the city is entered
-static void city_entered (GtkWidget* notebook, gpointer user_data) {
+static void city_entered (GtkWidget* notebook, gpointer user_data)
+{
         printf ("City entered.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the username is entered
-static void user_name_entered (GtkWidget* window, gpointer user_data) {
+static void user_name_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Username entered.\n");
 }
 
 //Function to handle when the full name is entered
-static void full_name_entered (GtkWidget* window, gpointer user_data) {
+static void full_name_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Full name entered.\n");
 }
 
 //Function to handle when the password is entered
-static void password_entered (GtkWidget* window, gpointer user_data) {
+static void password_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Password entered.\n");
 }
 
 //Function to handle when the password verification is entered
-static void password_verification_entered (GtkWidget* window, gpointer user_data) {
+static void password_verification_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Password verification entered.\n");
         gtk_widget_destroy (window);
         exit (0);
@@ -102,7 +111,8 @@ static void password_verification_entered (GtkWidget* window, gpointer user_data
 
 //Function to display an installation warning
 /*
-static void install_warning (GtkWidget* window, gpointer user_data) {
+static void install_warning (GtkWidget* window, gpointer user_data)
+{
         //Declaration of the warning dialog
         GtkWidget* warning_dialog;
 
@@ -121,7 +131,8 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 */
 
 //Function that is activated by the main function
-static void activate (GtkApplication* app, gpointer user_data) {
+static void activate (GtkApplication* app, gpointer user_data)
+{
         //Declaration/instantiation of the window and notebook
         GtkWidget* window = gtk_application_window_new (app);
         GtkWidget* notebook = gtk_notebook_new ();
@@ -264,7 +275,8 @@ static void activate (GtkApplication* app, gpointer user_data) {
 }
 
 //Main function
-int main (int argc, char **argv) {
+int main (int argc, char **argv)
+{
         //Declaration of the GtkApplicaton and status
         GtkApplication* app;
         gint status;
