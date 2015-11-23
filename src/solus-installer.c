@@ -142,19 +142,19 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Declaration/instantiation of the new button and the icon
         GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
-        GtkWidget* new_icon = gtk_image_new_from_file ("new.png");
+        GtkWidget* new_icon = gtk_image_new_from_file ("../data/new.png");
 
         //Declaration/instantiation of the livecd button and the icon
         GtkWidget* livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
-        GtkWidget* livecd_icon = gtk_image_new_from_file ("live.png");
+        GtkWidget* livecd_icon = gtk_image_new_from_file ("../data/live.png");
 
         //Declaration/instantiation of the install button and the icon
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
-        GtkWidget* install_icon = gtk_image_new_from_file ("install.png");
+        GtkWidget* install_icon = gtk_image_new_from_file ("../data/install.png");
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* region_button = gtk_button_new_with_label ("Region");
-        GtkWidget* region_icon = gtk_image_new_from_file ("region.png");
+        GtkWidget* region_icon = gtk_image_new_from_file ("../data/region.png");
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
@@ -182,7 +182,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
-        gtk_window_set_icon_from_file (GTK_WINDOW (window), "live.png", NULL);
+        gtk_window_set_icon_from_file (GTK_WINDOW (window), "../data/live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
         gtk_window_set_default_size (GTK_WINDOW (window), WIN_X, WIN_Y);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
