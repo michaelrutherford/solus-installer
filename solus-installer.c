@@ -33,16 +33,14 @@ static void password_entered (GtkWidget* window, gpointer user_data);
 static void password_verification_entered (GtkWidget* window, gpointer user_data);
 
 //Function to destroy the window so that the installer quits
-static void quit_installer_clicked (GtkWidget* window, gpointer user_data)
-{
+static void quit_installer_clicked (GtkWidget* window, gpointer user_data) {
         printf ("Quit installer clicked.\n");
         gtk_widget_destroy (window);
-        exit (0);
+        exit (EXIT_SUCCESS);
 }
 
 //Function to display changelog for Solus
-static void whats_new_clicked (GtkWidget* window, gpointer user_data)
-{
+static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
         printf ("What's new clicked.\n");
         gint status;
 
@@ -64,75 +62,68 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data)
 }
 
 //Function to destroy the window so that the installer quits
-static void install_solus_clicked (GtkWidget* notebook, gpointer user_data)
-{
+static void install_solus_clicked (GtkWidget* notebook, gpointer user_data) {
         printf ("Install Solus clicked.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the region is entered
-static void region_entered (GtkWidget* window, gpointer user_data)
-{
+static void region_entered (GtkWidget* window, gpointer user_data) {
         printf ("Region entered.\n");
 }
 
 //Function to handle when the city is entered
-static void city_entered (GtkWidget* notebook, gpointer user_data)
-{
+static void city_entered (GtkWidget* notebook, gpointer user_data) {
         printf ("City entered.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the username is entered
-static void user_name_entered (GtkWidget* window, gpointer user_data)
-{
+static void user_name_entered (GtkWidget* window, gpointer user_data) {
         printf ("Username entered.\n");
 }
 
 //Function to handle when the full name is entered
-static void full_name_entered (GtkWidget* window, gpointer user_data)
-{
+static void full_name_entered (GtkWidget* window, gpointer user_data) {
         printf ("Full name entered.\n");
 }
 
 //Function to handle when the password is entered
-static void password_entered (GtkWidget* window, gpointer user_data)
-{
+static void password_entered (GtkWidget* window, gpointer user_data) {
         printf ("Password entered.\n");
 }
 
 //Function to handle when the password verification is entered
-static void password_verification_entered (GtkWidget* window, gpointer user_data)
-{
+static void password_verification_entered (GtkWidget* notebook, gpointer user_data) {
         printf ("Password verification entered.\n");
-        gtk_widget_destroy (window);
-        exit (0);
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
-//Function to display an installation warning
 /*
-static void install_warning (GtkWidget* window, gpointer user_data)
-{
-        //Declaration of the warning dialog
-        GtkWidget* warning_dialog;
+//Function to display an installation warning
+static void install_warning (GtkWidget* window, gpointer user_data) {
+        printf ("Install warning displayed.\n");
+        gint status;
 
-        //Instantiation of the warning dialog
-        warning_dialog = gtk_message_dialog_new (GTK_WINDOW (window),
-                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                 GTK_MESSAGE_WARNING,
-                                                 GTK_BUTTONS_OK,
-                                                 "Installing Solus will erase the contents of the disk.");
-        gtk_window_set_title (GTK_WINDOW (warning_dialog), "Warning");
-        g_signal_connect_swapped (warning_dialog, "response", G_CALLBACK (gtk_widget_destroy), warning_dialog);
-
-        //Shows the warning dialog widget
-        gtk_widget_show_all (warning_dialog);
-}
+        //Declaration/instantiation of the changelog dialog
+        GtkWidget* new_dialog = gtk_dialog_new_with_buttons ("What's new?",
+                                                             GTK_WINDOW (window),
+                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                             "_OK",
+                                                             GTK_RESPONSE_ACCEPT,
+                                                             NULL);
+        gtk_window_set_default_size (GTK_WINDOW (new_dialog), 250, 250);
+        //Shows the changelog dialog widget
+        status = gtk_dialog_run (GTK_DIALOG (new_dialog));
+        if (status == 0) {
+                gtk_widget_destroy (new_dialog);
+        } else {
+                gtk_widget_destroy (new_dialog);
+        }
 */
 
 //Function that is activated by the main function
-static void activate (GtkApplication* app, gpointer user_data)
-{
+static void activate (GtkApplication* app, gpointer user_data) {
         //Declaration/instantiation of the window and notebook
         GtkWidget* window = gtk_application_window_new (app);
         GtkWidget* notebook = gtk_notebook_new ();
@@ -163,7 +154,7 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* region_button = gtk_button_new_with_label ("Region");
-        //GtkWidget* region_icon = gtk_image_new_from_file ("region.png");
+        GtkWidget* region_icon = gtk_image_new_from_file ("region.png");
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
@@ -228,9 +219,13 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Connects each button to a function
         g_signal_connect (region_button, "clicked", G_CALLBACK (region_entered), window);
+        gtk_button_set_always_show_image (GTK_BUTTON (region_button), TRUE);
+        gtk_button_set_image (GTK_BUTTON (region_button), region_icon);
+        gtk_button_set_image_position (GTK_BUTTON (region_button), GTK_POS_TOP);
+
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
 
-        //Sets label properties
+        //Sets user tab label properties
         gtk_label_set_width_chars (GTK_LABEL (user_name_label), 15);
         gtk_label_set_xalign (GTK_LABEL (user_name_label), 0);
         gtk_label_set_width_chars (GTK_LABEL (full_name_label), 15);
@@ -244,11 +239,11 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
         gtk_entry_set_visibility (GTK_ENTRY (verify_password_entry), FALSE);
 
-        //Connects each entry to a function
+        //Connects each entry on the user tab to a function
         g_signal_connect (user_name_entry, "activate", G_CALLBACK (user_name_entered), window);
         g_signal_connect (full_name_entry, "activate", G_CALLBACK (full_name_entered), window);
         g_signal_connect (password_entry, "activate", G_CALLBACK (password_entered), window);
-        g_signal_connect (verify_password_entry, "activate", G_CALLBACK (password_verification_entered), window);
+        g_signal_connect_swapped (verify_password_entry, "activate", G_CALLBACK (password_verification_entered), notebook);
 
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
@@ -275,8 +270,7 @@ static void activate (GtkApplication* app, gpointer user_data)
 }
 
 //Main function
-int main (int argc, char **argv)
-{
+int main (int argc, char **argv) {
         //Declaration of the GtkApplicaton and status
         GtkApplication* app;
         gint status;
