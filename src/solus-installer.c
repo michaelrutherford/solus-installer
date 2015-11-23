@@ -51,7 +51,7 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
                                                              "_OK",
                                                              GTK_RESPONSE_ACCEPT,
                                                              NULL);
-        gtk_window_set_default_size (GTK_WINDOW (new_dialog), 250, 250);
+        gtk_window_set_default_size (GTK_WINDOW (new_dialog), DIALOG_X, DIALOG_Y);
         //Shows the changelog dialog widget
         status = gtk_dialog_run (GTK_DIALOG (new_dialog));
         if (status == 0) {
@@ -112,7 +112,7 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
                                                              "_OK",
                                                              GTK_RESPONSE_ACCEPT,
                                                              NULL);
-        gtk_window_set_default_size (GTK_WINDOW (new_dialog), 250, 250);
+        gtk_window_set_default_size (GTK_WINDOW (new_dialog), DIALOG_X, DIALOG_Y);
         //Shows the changelog dialog widget
         status = gtk_dialog_run (GTK_DIALOG (new_dialog));
         if (status == 0) {
@@ -156,9 +156,9 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* region_button = gtk_button_new_with_label ("Region");
         GtkWidget* region_icon = gtk_image_new_from_file ("../data/region.png");
 
-        //Declaration/instantiation of the region button and the icon
+        //Declaration/instantiation of the city button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
-        //GtkWidget* city_icon = gtk_image_new_from_file ("city.png");
+        //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
 
         //Declaration/instantiation of the widgets for the user name
         GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
@@ -184,7 +184,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "../data/live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-        gtk_window_set_default_size (GTK_WINDOW (window), WIN_X, WIN_Y);
+        gtk_window_set_default_size (GTK_WINDOW (window), WINDOW_X, WINDOW_Y);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 
         //Sets the tabs positions and adds pages with labels
@@ -217,23 +217,29 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (install_solus_clicked), notebook);
 
-        //Connects each button to a function
-        g_signal_connect (region_button, "clicked", G_CALLBACK (region_entered), window);
+        //Assigns an image to the region button and connects a function to the button
         gtk_button_set_always_show_image (GTK_BUTTON (region_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (region_button), region_icon);
         gtk_button_set_image_position (GTK_BUTTON (region_button), GTK_POS_TOP);
+        g_signal_connect (region_button, "clicked", G_CALLBACK (region_entered), window);
 
+        /*
+        //Assigns an image to the city button and connects a function to the button
+        gtk_button_set_always_show_image (GTK_BUTTON (city_button), TRUE);
+        gtk_button_set_image (GTK_BUTTON (city_button), city_icon);
+        gtk_button_set_image_position (GTK_BUTTON (city_button), GTK_POS_TOP);
+        */
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
 
         //Sets user tab label properties
-        gtk_label_set_width_chars (GTK_LABEL (user_name_label), 15);
-        gtk_label_set_xalign (GTK_LABEL (user_name_label), 0);
-        gtk_label_set_width_chars (GTK_LABEL (full_name_label), 15);
-        gtk_label_set_xalign (GTK_LABEL (full_name_label), 0);
-        gtk_label_set_width_chars (GTK_LABEL (password_label), 15);
-        gtk_label_set_xalign (GTK_LABEL (password_label), 0);
-        gtk_label_set_width_chars (GTK_LABEL (verify_password_label), 15);
-        gtk_label_set_xalign (GTK_LABEL (verify_password_label), 0);
+        gtk_label_set_width_chars (GTK_LABEL (user_name_label), ENTRY_WIDTH);
+        gtk_label_set_xalign (GTK_LABEL (user_name_label), ALIGN_LEFT);
+        gtk_label_set_width_chars (GTK_LABEL (full_name_label), ENTRY_WIDTH);
+        gtk_label_set_xalign (GTK_LABEL (full_name_label), ALIGN_LEFT);
+        gtk_label_set_width_chars (GTK_LABEL (password_label), ENTRY_WIDTH);
+        gtk_label_set_xalign (GTK_LABEL (password_label), ALIGN_LEFT);
+        gtk_label_set_width_chars (GTK_LABEL (verify_password_label), ENTRY_WIDTH);
+        gtk_label_set_xalign (GTK_LABEL (verify_password_label), ALIGN_LEFT);
 
         //Removes character visibility from the password entry objects
         gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
