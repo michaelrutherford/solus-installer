@@ -19,8 +19,12 @@
 #ifndef solus_installer_h
 #define solus_installer_h
 
-#define WIN_X 750
-#define WIN_Y 350
+#define WINDOW_X 750
+#define WINDOW_Y 350
+#define DIALOG_X 250
+#define DIALOG_Y 250
+#define ENTRY_WIDTH 15
+#define ALIGN_LEFT 0
 
 struct timezone {
         char *continent[20];
