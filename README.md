@@ -1,8 +1,7 @@
 #solus-installer
 
 ## About
-solus-installer is an installer for the Solus operating system.
-Website: https://solus-project.com/
+solus-installer is an installer for the [Solus](https://solus-project.com/) operating system.
 
 ## Compiling
 ```
