@@ -158,6 +158,8 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* users_label = gtk_label_new ("Users");
         GtkWidget* partition_label = gtk_label_new ("Partioning");
 
+        //GtkWidget* welcome_title_label = gtk_label_new ("Welcome to Solus Operating System");
+
         //Declaration/instantiation of the new button and the icon
         GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
         GtkWidget* new_icon = gtk_image_new_from_file ("../data/images/new.png");
@@ -176,7 +178,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Declaration/instantiation of the find button and the icon
         GtkWidget* manual_button = gtk_button_new_with_label ("Find location manually");
-        //GtkWidget* find_icon = gtk_image_new_from_file ("../data/images/find.png");
+        GtkWidget* manual_icon = gtk_image_new_from_file ("../data/images/manual.png");
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* region_button = gtk_button_new_with_label ("Region");
@@ -215,6 +217,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Sets the tabs positions and adds pages with labels
         gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
+        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), find_button_box, find_label, 1);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 2);
@@ -251,7 +254,10 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (find_button), GTK_POS_TOP);
         g_signal_connect_swapped (find_button, "clicked", G_CALLBACK (find_clicked), notebook);
 
-        //Cnnects a function to the manual button
+        //Assigns an image to the manual button and connects a function to the button
+        gtk_button_set_always_show_image (GTK_BUTTON (manual_button), TRUE);
+        gtk_button_set_image (GTK_BUTTON (manual_button), manual_icon);
+        gtk_button_set_image_position (GTK_BUTTON (manual_button), GTK_POS_TOP);
         g_signal_connect_swapped (manual_button, "clicked", G_CALLBACK (manual_clicked), notebook);
 
         //Assigns an image to the region button and connects a function to the button
