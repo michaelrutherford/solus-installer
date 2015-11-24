@@ -25,6 +25,7 @@
 #define DIALOG_Y 250
 #define ENTRY_WIDTH 15
 #define ALIGN_LEFT 0
+#define BOX_SPACING 5
 
 struct timezone {
         char *continent[20];

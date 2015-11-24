@@ -146,7 +146,7 @@ static void activate (GtkApplication* app, gpointer user_data) {
 
         //Declaration/instantiation of the button boxes
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* find_button_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
+        GtkWidget* find_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* users_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
         GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -187,22 +187,22 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
 
         //Declaration/instantiation of the widgets for the user name
-        GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
         GtkWidget* user_name_label = gtk_label_new ("User Name");
         GtkWidget* user_name_entry = gtk_entry_new ();
 
         //Declaration/instantiation of the widgets for the full name
-        GtkWidget* full_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* full_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
         GtkWidget* full_name_label = gtk_label_new ("Full Name");
         GtkWidget* full_name_entry = gtk_entry_new ();
 
         //Declaration/instantiation of the widgets for the password
-        GtkWidget* password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
         GtkWidget* password_label = gtk_label_new ("Password");
         GtkWidget* password_entry = gtk_entry_new ();
 
         //Declaration/instantiation of the widgets for the password verification
-        GtkWidget* verify_password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget* verify_password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
         GtkWidget* verify_password_label = gtk_label_new ("Verify Password");
         GtkWidget* verify_password_entry = gtk_entry_new ();
 
@@ -267,6 +267,15 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_image_position (GTK_BUTTON (city_button), GTK_POS_TOP);
         */
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
+
+        //Sets the relief to none on all the buttons
+        gtk_button_set_relief (GTK_BUTTON (livecd_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (new_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (install_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (find_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (manual_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (region_button), GTK_RELIEF_NONE);
+        //gtk_button_set_relief (GTK_BUTTON (city_button), GTK_RELIEF_NONE);
 
         //Sets user tab label properties
         gtk_label_set_width_chars (GTK_LABEL (user_name_label), ENTRY_WIDTH);
