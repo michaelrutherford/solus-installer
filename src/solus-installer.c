@@ -45,7 +45,6 @@ static void quit_installer_clicked (GtkWidget* window, gpointer user_data) {
 //Function to display changelog for Solus
 static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
         printf ("What's new clicked.\n");
-        gint status;
 
         //Declaration/instantiation of the changelog dialog
         GtkWidget* new_dialog = gtk_dialog_new_with_buttons ("What's new?",
@@ -54,14 +53,20 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
                                                              "_OK",
                                                              GTK_RESPONSE_ACCEPT,
                                                              NULL);
+
+        //Declaration/instantiation of the changelog content area and text
+        GtkWidget* new_content_area = gtk_dialog_get_content_area (GTK_DIALOG (new_dialog));
+        GtkWidget* changelog_text = gtk_label_new ("Solus Release #");
+
+        //Sets the dialog window size and adds
         gtk_window_set_default_size (GTK_WINDOW (new_dialog), DIALOG_X, DIALOG_Y);
+        gtk_container_add (GTK_CONTAINER (new_content_area), changelog_text);
+
+        //Connects the dialog button to a function
+        g_signal_connect_swapped (new_dialog, "response", G_CALLBACK (gtk_widget_destroy), new_dialog);
+
         //Shows the changelog dialog widget
-        status = gtk_dialog_run (GTK_DIALOG (new_dialog));
-        if (status == 0) {
-                gtk_widget_destroy (new_dialog);
-        } else {
-                gtk_widget_destroy (new_dialog);
-        }
+        gtk_widget_show_all (new_dialog);
 }
 
 //Function to destroy the window so that the installer quits
