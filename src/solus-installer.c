@@ -140,6 +140,9 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 
 //Function that is activated by the main function
 static void activate (GtkApplication* app, gpointer user_data) {
+        //Make dark theme the default theme
+        g_object_set (gtk_settings_get_default(), "gtk-application-prefer-dark-theme", TRUE, NULL);
+
         //Declaration/instantiation of the window and notebook
         GtkWidget* window = gtk_application_window_new (app);
         GtkWidget* notebook = gtk_notebook_new ();
