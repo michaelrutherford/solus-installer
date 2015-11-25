@@ -110,27 +110,49 @@ static void city_entered (GtkWidget* notebook, gpointer user_data)
 }
 
 //Function to handle when the username is entered
-static void user_name_entered (GtkWidget* window, gpointer user_data)
+static void user_name_entered (GtkWidget* entry, gpointer user_data)
 {
-        printf ("Username entered.\n");
+        user_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
+        printf ("Username is now %s \n", user_name);
 }
 
 //Function to handle when the full name is entered
-static void full_name_entered (GtkWidget* window, gpointer user_data)
+static void full_name_entered (GtkWidget* entry, gpointer user_data)
 {
-        printf ("Full name entered.\n");
+        full_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
+        printf ("Full name is now %s \n", full_name);
 }
 
 //Function to handle when the password is entered
-static void password_entered (GtkWidget* window, gpointer user_data)
+static void password_entered (GtkWidget* entry, gpointer user_data)
 {
-        printf ("Password entered.\n");
+        password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
+        printf ("Password is now %s \n", password);
 }
 
 //Function to handle when the password verification is entered
-static void password_verification_entered (GtkWidget* notebook, gpointer user_data)
+static void password_verification_entered (GtkWidget* entry, gpointer user_data)
 {
-        printf ("Password verification entered.\n");
+        verified_password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
+        printf ("Password verification is now %s \n", verified_password);
+}
+
+//Function to handle when the password verification is entered
+static void check_passwords (GtkWidget* notebook, gpointer user_data)
+{
+        if (strncmp (verified_password, password, 255) == 0) {
+                printf ("Passwords match.\n");
+                gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
+        } else {
+                printf ("Passwords do not match.\n");
+        }
+}
+
+//Function to handle when the user chooses advanced mode
+static void advanced_clicked (GtkWidget* notebook, gpointer user_data)
+{
+        printf ("Advanced mode entered.\n");
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
@@ -138,14 +160,6 @@ static void password_verification_entered (GtkWidget* notebook, gpointer user_da
 static void full_disk_clicked (GtkWidget* notebook, gpointer user_data)
 {
         printf ("Full disk mode entered.\n");
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-}
-
-//Function to handle when the user chooses full disk mode
-static void advanced_clicked (GtkWidget* notebook, gpointer user_data)
-{
-        printf ("Advanced mode entered.\n");
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
@@ -357,13 +371,12 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
         gtk_entry_set_visibility (GTK_ENTRY (verify_password_entry), FALSE);
 
-        //gtk_entry_set_buffer (GTK_ENTRY (user_name_entry), user_name_buffer);
-
         //Connects each entry on the user tab to a function
-        g_signal_connect (user_name_entry, "activate", G_CALLBACK (user_name_entered), window);
-        g_signal_connect (full_name_entry, "activate", G_CALLBACK (full_name_entered), window);
-        g_signal_connect (password_entry, "activate", G_CALLBACK (password_entered), window);
-        g_signal_connect_swapped (verify_password_entry, "activate", G_CALLBACK (password_verification_entered), notebook);
+        g_signal_connect (user_name_entry, "changed", G_CALLBACK (user_name_entered), user_name_entry);
+        g_signal_connect (full_name_entry, "changed", G_CALLBACK (full_name_entered), full_name_entry);
+        g_signal_connect (password_entry, "changed", G_CALLBACK (password_entered), password_entry);
+        g_signal_connect (verify_password_entry, "changed", G_CALLBACK (password_verification_entered), verify_password_entry);
+        g_signal_connect_swapped (verify_password_entry, "changed", G_CALLBACK (check_passwords), notebook);
 
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
