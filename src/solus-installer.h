@@ -27,10 +27,17 @@
 #define ALIGN_LEFT 0
 #define BOX_SPACING 5
 
-struct timezone {
-        char *continent[20];
-        char *location[25];
-        char *utc[10];
+struct user_setup {
+        char* user_name;
+        char* full_name;
+        char* password;
+        char* verified_password;
+};
+
+struct time_zone {
+        char* continent[20];
+        char* location[25];
+        char* utc[10];
 };
 
 #endif

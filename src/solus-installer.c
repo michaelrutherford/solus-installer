@@ -20,6 +20,7 @@
 #include "solus-installer.h"
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Function prototypes
 static void quit_installer_clicked (GtkWidget* window, gpointer user_data);
@@ -33,17 +34,21 @@ static void user_name_entered (GtkWidget* window, gpointer user_data);
 static void full_name_entered (GtkWidget* window, gpointer user_data);
 static void password_entered (GtkWidget* window, gpointer user_data);
 static void password_verification_entered (GtkWidget* notebook, gpointer user_data);
+static void full_disk_clicked (GtkWidget* notebook, gpointer user_data);
+static void advanced_clicked (GtkWidget* notebook, gpointer user_data);
 //static void install_warning (GtkWidget* window, gpointer user_data);
 
 //Function to destroy the window so that the installer quits
-static void quit_installer_clicked (GtkWidget* window, gpointer user_data) {
+static void quit_installer_clicked (GtkWidget* window, gpointer user_data)
+{
         printf ("Quit installer clicked.\n");
         gtk_widget_destroy (window);
         exit (EXIT_SUCCESS);
 }
 
 //Function to display changelog for Solus
-static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
+static void whats_new_clicked (GtkWidget* window, gpointer user_data)
+{
         printf ("What's new clicked.\n");
 
         //Declaration/instantiation of the changelog dialog
@@ -70,59 +75,84 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data) {
 }
 
 //Function to destroy the window so that the installer quits
-static void install_solus_clicked (GtkWidget* notebook, gpointer user_data) {
+static void install_solus_clicked (GtkWidget* notebook, gpointer user_data)
+{
         printf ("Install Solus clicked.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to find the user's location automatically
-static void find_clicked (GtkWidget* notebook, gpointer user_data) {
+static void find_clicked (GtkWidget* notebook, gpointer user_data)
+{
         printf ("Find location automatically entered.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to let the user select their timezone manually
-static void manual_clicked (GtkWidget* notebook, gpointer user_data) {
+static void manual_clicked (GtkWidget* notebook, gpointer user_data)
+{
         printf ("Find location manually entered.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the region is entered
-static void region_entered (GtkWidget* window, gpointer user_data) {
+static void region_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Region entered.\n");
 }
 
 //Function to handle when the city is entered
-static void city_entered (GtkWidget* notebook, gpointer user_data) {
+static void city_entered (GtkWidget* notebook, gpointer user_data)
+{
         printf ("City entered.\n");
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the username is entered
-static void user_name_entered (GtkWidget* window, gpointer user_data) {
+static void user_name_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Username entered.\n");
 }
 
 //Function to handle when the full name is entered
-static void full_name_entered (GtkWidget* window, gpointer user_data) {
+static void full_name_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Full name entered.\n");
 }
 
 //Function to handle when the password is entered
-static void password_entered (GtkWidget* window, gpointer user_data) {
+static void password_entered (GtkWidget* window, gpointer user_data)
+{
         printf ("Password entered.\n");
 }
 
 //Function to handle when the password verification is entered
-static void password_verification_entered (GtkWidget* notebook, gpointer user_data) {
+static void password_verification_entered (GtkWidget* notebook, gpointer user_data)
+{
         printf ("Password verification entered.\n");
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
+}
+
+//Function to handle when the user chooses full disk mode
+static void full_disk_clicked (GtkWidget* notebook, gpointer user_data)
+{
+        printf ("Full disk mode entered.\n");
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
+}
+
+//Function to handle when the user chooses full disk mode
+static void advanced_clicked (GtkWidget* notebook, gpointer user_data)
+{
+        printf ("Advanced mode entered.\n");
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 /*
 //Function to display an installation warning
-static void install_warning (GtkWidget* window, gpointer user_data) {
+static void install_warning (GtkWidget* window, gpointer user_data)
+{
         printf ("Install warning displayed.\n");
         gint status;
 
@@ -144,7 +174,8 @@ static void install_warning (GtkWidget* window, gpointer user_data) {
 */
 
 //Function that is activated by the main function
-static void activate (GtkApplication* app, gpointer user_data) {
+static void activate (GtkApplication* app, gpointer user_data)
+{
         //Make dark theme the default theme
         g_object_set (gtk_settings_get_default(), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
@@ -157,14 +188,18 @@ static void activate (GtkApplication* app, gpointer user_data) {
         GtkWidget* find_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* users_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
-        GtkWidget* partition_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* choose_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* full_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget* advanced_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
 
         //Declaration/instantiation of the tab labels
         GtkWidget* welcome_label = gtk_label_new ("Welcome");
         GtkWidget* find_label = gtk_label_new ("Find");
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
         GtkWidget* users_label = gtk_label_new ("Users");
-        GtkWidget* partition_label = gtk_label_new ("Partioning");
+        GtkWidget* choose_label = gtk_label_new ("Choose");
+        GtkWidget* full_label = gtk_label_new ("Full Disk Mode");
+        GtkWidget* advanced_label = gtk_label_new ("Advanced Mode");
 
         //GtkWidget* welcome_title_label = gtk_label_new ("Welcome to Solus Operating System");
 
@@ -195,6 +230,12 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //Declaration/instantiation of the city button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
         //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
+
+        //Declaration/instantiation of the city button and the icon
+        GtkWidget* full_button = gtk_button_new_with_label ("Full disk mode (Recommended)");
+
+        //Declaration/instantiation of the city button and the icon
+        GtkWidget* advanced_button = gtk_button_new_with_label ("Advanced mode");
 
         //Declaration/instantiation of the widgets for the user name
         GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
@@ -230,13 +271,18 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), find_button_box, find_label, 1);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 2);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_box, users_label, 3);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), partition_button_box, partition_label, 4);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), choose_button_box, choose_label, 4);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), full_button_box, full_label, 5);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), advanced_button_box, advanced_label, 5);
 
         //Sets button box layouts
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (find_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (users_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (choose_button_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (full_button_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (advanced_button_box), GTK_BUTTONBOX_SPREAD);
 
         //Assigns an image to the livecd button and connects a function to the button
         gtk_button_set_always_show_image (GTK_BUTTON (livecd_button), TRUE);
@@ -282,6 +328,10 @@ static void activate (GtkApplication* app, gpointer user_data) {
         */
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
 
+        //Connects the partitioning choice buttons to functions
+        g_signal_connect_swapped (full_button, "clicked", G_CALLBACK (full_disk_clicked), notebook);
+        g_signal_connect_swapped (advanced_button, "clicked", G_CALLBACK (advanced_clicked), notebook);
+
         //Sets the relief to none on all the buttons
         gtk_button_set_relief (GTK_BUTTON (livecd_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (new_button), GTK_RELIEF_NONE);
@@ -290,6 +340,8 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_button_set_relief (GTK_BUTTON (manual_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (region_button), GTK_RELIEF_NONE);
         //gtk_button_set_relief (GTK_BUTTON (city_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (full_button), GTK_RELIEF_NONE);
+        gtk_button_set_relief (GTK_BUTTON (advanced_button), GTK_RELIEF_NONE);
 
         //Sets user tab label properties
         gtk_label_set_width_chars (GTK_LABEL (user_name_label), ENTRY_WIDTH);
@@ -304,6 +356,8 @@ static void activate (GtkApplication* app, gpointer user_data) {
         //Removes character visibility from the password entry objects
         gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
         gtk_entry_set_visibility (GTK_ENTRY (verify_password_entry), FALSE);
+
+        //gtk_entry_set_buffer (GTK_ENTRY (user_name_entry), user_name_buffer);
 
         //Connects each entry on the user tab to a function
         g_signal_connect (user_name_entry, "activate", G_CALLBACK (user_name_entered), window);
@@ -332,13 +386,16 @@ static void activate (GtkApplication* app, gpointer user_data) {
         gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_label);
         gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_entry);
         gtk_container_add (GTK_CONTAINER (users_box), verify_password_box);
+        gtk_container_add (GTK_CONTAINER (choose_button_box), full_button);
+        gtk_container_add (GTK_CONTAINER (choose_button_box), advanced_button);
 
         //Displays the window and all the widgets attached to it
         gtk_widget_show_all (window);
 }
 
 //Main function
-int main (int argc, char **argv) {
+int main (int argc, char **argv)
+{
         //Declaration of the GtkApplicaton and status
         GtkApplication* app;
         gint status;
