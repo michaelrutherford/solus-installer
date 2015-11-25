@@ -140,7 +140,7 @@ static void password_verification_entered (GtkWidget* entry, gpointer user_data)
 //Function to handle when the password verification is entered
 static void check_passwords (GtkWidget* notebook, gpointer user_data)
 {
-        if (strncmp (verified_password, password, 255) == 0) {
+        if (strncmp (verified_password, password, 255) == 0 && password != NULL) {
                 printf ("Passwords match.\n");
                 gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         } else {
