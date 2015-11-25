@@ -30,10 +30,11 @@ static void find_clicked (GtkWidget* notebook, gpointer user_data);
 static void manual_clicked (GtkWidget* notebook, gpointer user_data);
 static void region_entered (GtkWidget* window, gpointer user_data);
 static void city_entered (GtkWidget* notebook, gpointer user_data);
-static void user_name_entered (GtkWidget* window, gpointer user_data);
-static void full_name_entered (GtkWidget* window, gpointer user_data);
-static void password_entered (GtkWidget* window, gpointer user_data);
-static void password_verification_entered (GtkWidget* notebook, gpointer user_data);
+static void user_name_entered (GtkWidget* entry, gpointer user_data);
+static void full_name_entered (GtkWidget* entry, gpointer user_data);
+static void password_entered (GtkWidget* entry, gpointer user_data);
+static void password_verification_entered (GtkWidget* entry, gpointer user_data);
+static void check_passwords (GtkWidget* notebook, gpointer user_data);
 static void full_disk_clicked (GtkWidget* notebook, gpointer user_data);
 static void advanced_clicked (GtkWidget* notebook, gpointer user_data);
 //static void install_warning (GtkWidget* window, gpointer user_data);
@@ -41,7 +42,9 @@ static void advanced_clicked (GtkWidget* notebook, gpointer user_data);
 //Function to destroy the window so that the installer quits
 static void quit_installer_clicked (GtkWidget* window, gpointer user_data)
 {
-        printf ("Quit installer clicked.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Quit installer clicked.\n");
+        }
         gtk_widget_destroy (window);
         exit (EXIT_SUCCESS);
 }
@@ -49,7 +52,9 @@ static void quit_installer_clicked (GtkWidget* window, gpointer user_data)
 //Function to display changelog for Solus
 static void whats_new_clicked (GtkWidget* window, gpointer user_data)
 {
-        printf ("What's new clicked.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("What's new clicked.\n");
+        }
 
         //Declaration/instantiation of the changelog dialog
         GtkWidget* new_dialog = gtk_dialog_new_with_buttons ("What's new?",
@@ -77,14 +82,18 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data)
 //Function to destroy the window so that the installer quits
 static void install_solus_clicked (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("Install Solus clicked.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Install Solus clicked.\n");
+        }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to find the user's location automatically
 static void find_clicked (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("Find location automatically entered.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Find location automatically entered.\n");
+        }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
@@ -92,20 +101,26 @@ static void find_clicked (GtkWidget* notebook, gpointer user_data)
 //Function to let the user select their timezone manually
 static void manual_clicked (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("Find location manually entered.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Find location manually entered.\n");
+        }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the region is entered
 static void region_entered (GtkWidget* window, gpointer user_data)
 {
-        printf ("Region entered.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Region entered.\n");
+        }
 }
 
 //Function to handle when the city is entered
 static void city_entered (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("City entered.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("City entered.\n");
+        }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
@@ -113,53 +128,70 @@ static void city_entered (GtkWidget* notebook, gpointer user_data)
 static void user_name_entered (GtkWidget* entry, gpointer user_data)
 {
         user_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        printf ("Username is now %s \n", user_name);
+        if (DEBUG_MODE == TRUE) {
+                printf ("Username is now %s \n", user_name);
+        }
 }
 
 //Function to handle when the full name is entered
 static void full_name_entered (GtkWidget* entry, gpointer user_data)
 {
         full_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        printf ("Full name is now %s \n", full_name);
+        if (DEBUG_MODE == TRUE) {
+                printf ("Full name is now %s \n", full_name);
+        }
 }
 
 //Function to handle when the password is entered
 static void password_entered (GtkWidget* entry, gpointer user_data)
 {
         password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        printf ("Password is now %s \n", password);
+        if (DEBUG_MODE == TRUE) {
+                printf ("Password is now %s \n", password);
+        }
 }
 
 //Function to handle when the password verification is entered
 static void password_verification_entered (GtkWidget* entry, gpointer user_data)
 {
         verified_password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        printf ("Password verification is now %s \n", verified_password);
+        if (DEBUG_MODE == TRUE) {
+                printf ("Password verification is now %s \n", verified_password);
+        }
 }
 
 //Function to handle when the password verification is entered
 static void check_passwords (GtkWidget* notebook, gpointer user_data)
 {
         if (strncmp (verified_password, password, 255) == 0 && password != NULL) {
-                printf ("Passwords match.\n");
+                if (DEBUG_MODE == TRUE) {
+                        printf ("Passwords match.\n");
+                }
+
                 gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         } else {
-                printf ("Passwords do not match.\n");
+                if (DEBUG_MODE == TRUE) {
+                        printf ("Passwords do not match.\n");
+                }
         }
 }
 
 //Function to handle when the user chooses advanced mode
 static void advanced_clicked (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("Advanced mode entered.\n");
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
+        if (DEBUG_MODE == TRUE) {
+                printf ("Advanced mode entered.\n");
+        }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
 //Function to handle when the user chooses full disk mode
 static void full_disk_clicked (GtkWidget* notebook, gpointer user_data)
 {
-        printf ("Full disk mode entered.\n");
+        if (DEBUG_MODE == TRUE) {
+                printf ("Full disk mode entered.\n");
+        }
+        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
@@ -280,7 +312,11 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Sets the tabs positions and adds pages with labels
         gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
-        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+        if (DEBUG_MODE == TRUE) {
+                gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), TRUE);
+        } else {
+                gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+        }
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), find_button_box, find_label, 1);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 2);

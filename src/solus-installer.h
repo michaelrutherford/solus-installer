@@ -26,6 +26,7 @@
 #define ENTRY_WIDTH 15
 #define ALIGN_LEFT 0
 #define BOX_SPACING 5
+#define DEBUG_MODE FALSE
 
 char* user_name;
 char* full_name;
