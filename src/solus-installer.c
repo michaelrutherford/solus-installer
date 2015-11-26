@@ -28,7 +28,7 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data);
 static void install_solus_clicked (GtkWidget* notebook, gpointer user_data);
 static void find_clicked (GtkWidget* notebook, gpointer user_data);
 static void manual_clicked (GtkWidget* notebook, gpointer user_data);
-static void region_entered (GtkWidget* window, gpointer user_data);
+static void region_clicked (gpointer user_data);
 static void city_entered (GtkWidget* notebook, gpointer user_data);
 static void user_name_entered (GtkWidget* entry, gpointer user_data);
 static void full_name_entered (GtkWidget* entry, gpointer user_data);
@@ -108,10 +108,10 @@ static void manual_clicked (GtkWidget* notebook, gpointer user_data)
 }
 
 //Function to handle when the region is entered
-static void region_entered (GtkWidget* window, gpointer user_data)
+static void region_clicked (gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
-                printf ("Region entered.\n");
+                printf ("Region clicked.\n");
         }
 }
 
@@ -119,7 +119,7 @@ static void region_entered (GtkWidget* window, gpointer user_data)
 static void city_entered (GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
-                printf ("City entered.\n");
+                printf ("City clicked.\n");
         }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
@@ -270,12 +270,19 @@ static void activate (GtkApplication* app, gpointer user_data)
         GtkWidget* manual_icon = gtk_image_new_from_file ("../data/images/manual.png");
 
         //Declaration/instantiation of the region button and the icon
-        GtkWidget* region_button = gtk_button_new_with_label ("Region");
+        GtkWidget* region_button = gtk_menu_button_new ();
         GtkWidget* region_icon = gtk_image_new_from_file ("../data/images/region.png");
 
         //Declaration/instantiation of the city button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
         //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
+
+        //Declaration/instantiation of the region menu
+        GMenu* region_menu = g_menu_new ();
+
+        //Declaration/instantiation of the region menu items
+        GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label ("America");
+        GtkWidget* region_menu_item_not_america = gtk_menu_item_new_with_label ("Everywhere else");
 
         //Declaration/instantiation of the city button and the icon
         GtkWidget* full_button = gtk_button_new_with_label ("Full disk mode (Recommended)");
@@ -368,7 +375,9 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_button_set_always_show_image (GTK_BUTTON (region_button), TRUE);
         gtk_button_set_image (GTK_BUTTON (region_button), region_icon);
         gtk_button_set_image_position (GTK_BUTTON (region_button), GTK_POS_TOP);
-        g_signal_connect (region_button, "clicked", G_CALLBACK (region_entered), window);
+
+        //Sets the label on the region button
+        gtk_button_set_label (GTK_BUTTON (region_button), "Region");
 
         /*
         //Assigns an image to the city button and connects a function to the button
@@ -377,6 +386,13 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_button_set_image_position (GTK_BUTTON (city_button), GTK_POS_TOP);
         */
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
+
+        //Adds the region menu to the region button
+        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (region_button), G_MENU_MODEL (region_menu));
+
+        //Appends the region menu items to the region menu
+        g_menu_append (region_menu, "America", "america.region");
+        g_menu_append (region_menu, "Everywhere else", "everywhere.region");
 
         //Connects the partitioning choice buttons to functions
         g_signal_connect_swapped (full_button, "clicked", G_CALLBACK (full_disk_clicked), notebook);
