@@ -26,7 +26,7 @@
 #define ENTRY_WIDTH 15
 #define ALIGN_LEFT 0
 #define BOX_SPACING 5
-#define DEBUG_MODE TRUE
+#define DEBUG_MODE FALSE
 
 char* region;
 char* city;

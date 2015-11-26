@@ -278,7 +278,7 @@ static void activate (GtkApplication* app, gpointer user_data)
         //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
 
         //Declaration/instantiation of the region menu
-        GMenu* region_menu = g_menu_new ();
+        GtkWidget* region_menu = gtk_menu_new ();
 
         //Declaration/instantiation of the region menu items
         GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label ("America");
@@ -387,12 +387,16 @@ static void activate (GtkApplication* app, gpointer user_data)
         */
         g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
 
-        //Adds the region menu to the region button
-        gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (region_button), G_MENU_MODEL (region_menu));
+        //Attaches the region menu items to the region menu
+        gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_america, 0, 1, 0, 1);
+        gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_not_america, 0, 1, 1, 2);
 
-        //Appends the region menu items to the region menu
-        g_menu_append (region_menu, "America", "america.region");
-        g_menu_append (region_menu, "Everywhere else", "everywhere.region");
+        //Adds the region menu to the region button
+        gtk_menu_button_set_popup (GTK_MENU_BUTTON (region_button), region_menu);
+        gtk_widget_show_all (region_menu);
+
+        g_signal_connect_swapped (region_menu_item_america, "activate", G_CALLBACK (region_clicked), user_data);
+        g_signal_connect_swapped (region_menu_item_not_america, "activate", G_CALLBACK (region_clicked), user_data);
 
         //Connects the partitioning choice buttons to functions
         g_signal_connect_swapped (full_button, "clicked", G_CALLBACK (full_disk_clicked), notebook);
