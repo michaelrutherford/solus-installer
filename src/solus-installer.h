@@ -26,7 +26,7 @@
 #define ENTRY_WIDTH 15
 #define ALIGN_LEFT 0
 #define BOX_SPACING 5
-#define DEBUG_MODE TRUE
+#define DEBUG_MODE FALSE
 
 char* region;
 char* city;
@@ -35,11 +35,5 @@ char* user_name;
 char* full_name;
 char* password;
 char* verified_password;
-
-struct time_zone {
-        char* continent[20];
-        char* location[25];
-        char* utc[10];
-};
 
 #endif
