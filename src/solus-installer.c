@@ -392,12 +392,13 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_america, 0, 1, 0, 1);
         gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_not_america, 0, 1, 1, 2);
 
-        //Adds the region menu to the region button
+        //Adds the region menu to the region button and displays the region menu
         gtk_menu_button_set_popup (GTK_MENU_BUTTON (region_button), region_menu);
         gtk_widget_show_all (region_menu);
 
+        //Connects each menu item to a function
         g_signal_connect_swapped (region_menu_item_america, "activate", G_CALLBACK (region_clicked), "America");
-        g_signal_connect_swapped (region_menu_item_not_america, "activate", G_CALLBACK (region_clicked), user_data);
+        g_signal_connect_swapped (region_menu_item_not_america, "activate", G_CALLBACK (region_clicked), "Somewhere");
 
         //Connects the partitioning choice buttons to functions
         g_signal_connect_swapped (full_button, "clicked", G_CALLBACK (full_disk_clicked), notebook);
