@@ -28,7 +28,7 @@ static void whats_new_clicked (GtkWidget* window, gpointer user_data);
 static void install_solus_clicked (GtkWidget* notebook, gpointer user_data);
 static void find_clicked (GtkWidget* notebook, gpointer user_data);
 static void manual_clicked (GtkWidget* notebook, gpointer user_data);
-static void region_clicked (gpointer user_data);
+static void region_clicked (char* selected_region, gpointer user_data);
 static void city_entered (GtkWidget* notebook, gpointer user_data);
 static void user_name_entered (GtkWidget* entry, gpointer user_data);
 static void full_name_entered (GtkWidget* entry, gpointer user_data);
@@ -108,10 +108,11 @@ static void manual_clicked (GtkWidget* notebook, gpointer user_data)
 }
 
 //Function to handle when the region is entered
-static void region_clicked (gpointer user_data)
+static void region_clicked (char* selected_region, gpointer user_data)
 {
+        region = selected_region;
         if (DEBUG_MODE == TRUE) {
-                printf ("Region clicked.\n");
+                printf ("Region is now %s.\n", region);
         }
 }
 
@@ -395,7 +396,7 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_menu_button_set_popup (GTK_MENU_BUTTON (region_button), region_menu);
         gtk_widget_show_all (region_menu);
 
-        g_signal_connect_swapped (region_menu_item_america, "activate", G_CALLBACK (region_clicked), user_data);
+        g_signal_connect_swapped (region_menu_item_america, "activate", G_CALLBACK (region_clicked), "America");
         g_signal_connect_swapped (region_menu_item_not_america, "activate", G_CALLBACK (region_clicked), user_data);
 
         //Connects the partitioning choice buttons to functions
