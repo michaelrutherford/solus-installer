@@ -252,27 +252,27 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Declaration/instantiation of the new button and the icon
         GtkWidget* new_button = gtk_button_new_with_label ("What's New In Solus?");
-        GtkWidget* new_icon = gtk_image_new_from_file ("../data/images/new.png");
+        GtkWidget* new_icon = gtk_image_new_from_file ("data/images/new.png");
 
         //Declaration/instantiation of the livecd button and the icon
         GtkWidget* livecd_button = gtk_button_new_with_label ("Keep Using LiveCD");
-        GtkWidget* livecd_icon = gtk_image_new_from_file ("../data/images/live.png");
+        GtkWidget* livecd_icon = gtk_image_new_from_file ("data/images/live.png");
 
         //Declaration/instantiation of the install button and the icon
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
-        GtkWidget* install_icon = gtk_image_new_from_file ("../data/images/install.png");
+        GtkWidget* install_icon = gtk_image_new_from_file ("data/images/install.png");
 
         //Declaration/instantiation of the find button and the icon
         GtkWidget* find_button = gtk_button_new_with_label ("Find location automatically");
-        GtkWidget* find_icon = gtk_image_new_from_file ("../data/images/find.png");
+        GtkWidget* find_icon = gtk_image_new_from_file ("data/images/find.png");
 
         //Declaration/instantiation of the find button and the icon
         GtkWidget* manual_button = gtk_button_new_with_label ("Find location manually");
-        GtkWidget* manual_icon = gtk_image_new_from_file ("../data/images/manual.png");
+        GtkWidget* manual_icon = gtk_image_new_from_file ("data/images/manual.png");
 
         //Declaration/instantiation of the region button and the icon
         GtkWidget* region_button = gtk_menu_button_new ();
-        GtkWidget* region_icon = gtk_image_new_from_file ("../data/images/region.png");
+        GtkWidget* region_icon = gtk_image_new_from_file ("data/images/region.png");
 
         //Declaration/instantiation of the city button and the icon
         GtkWidget* city_button = gtk_button_new_with_label ("City");
@@ -313,7 +313,7 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
-        gtk_window_set_icon_from_file (GTK_WINDOW (window), "../data/images/live.png", NULL);
+        gtk_window_set_icon_from_file (GTK_WINDOW (window), "data/images/live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
         gtk_window_set_default_size (GTK_WINDOW (window), WINDOW_X, WINDOW_Y);
         gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
