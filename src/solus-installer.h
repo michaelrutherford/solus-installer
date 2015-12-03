@@ -28,7 +28,4 @@
 #define BOX_SPACING 5
 #define DEBUG_MODE FALSE
 
-char* region;
-char* city;
-
 #endif
