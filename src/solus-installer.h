@@ -31,9 +31,4 @@
 char* region;
 char* city;
 
-char* user_name;
-char* full_name;
-char* password;
-char* verified_password;
-
 #endif

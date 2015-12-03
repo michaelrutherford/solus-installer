@@ -30,11 +30,6 @@ static void find_clicked (GtkWidget* notebook, gpointer user_data);
 static void manual_clicked (GtkWidget* notebook, gpointer user_data);
 static void region_clicked (char* selected_region, gpointer user_data);
 static void city_entered (GtkWidget* notebook, gpointer user_data);
-static void user_name_entered (GtkWidget* entry, gpointer user_data);
-static void full_name_entered (GtkWidget* entry, gpointer user_data);
-static void password_entered (GtkWidget* entry, gpointer user_data);
-static void password_verification_entered (GtkWidget* entry, gpointer user_data);
-static void check_passwords (GtkWidget* notebook, gpointer user_data);
 static void full_disk_clicked (GtkWidget* notebook, gpointer user_data);
 static void advanced_clicked (GtkWidget* notebook, gpointer user_data);
 //static void install_warning (GtkWidget* window, gpointer user_data);
@@ -125,58 +120,6 @@ static void city_entered (GtkWidget* notebook, gpointer user_data)
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
 
-//Function to handle when the username is entered
-static void user_name_entered (GtkWidget* entry, gpointer user_data)
-{
-        user_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        if (DEBUG_MODE == TRUE) {
-                printf ("Username is now %s \n", user_name);
-        }
-}
-
-//Function to handle when the full name is entered
-static void full_name_entered (GtkWidget* entry, gpointer user_data)
-{
-        full_name = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        if (DEBUG_MODE == TRUE) {
-                printf ("Full name is now %s \n", full_name);
-        }
-}
-
-//Function to handle when the password is entered
-static void password_entered (GtkWidget* entry, gpointer user_data)
-{
-        password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        if (DEBUG_MODE == TRUE) {
-                printf ("Password is now %s \n", password);
-        }
-}
-
-//Function to handle when the password verification is entered
-static void password_verification_entered (GtkWidget* entry, gpointer user_data)
-{
-        verified_password = (char*) gtk_entry_get_text (GTK_ENTRY (entry));
-        if (DEBUG_MODE == TRUE) {
-                printf ("Password verification is now %s \n", verified_password);
-        }
-}
-
-//Function to handle when the password verification is entered
-static void check_passwords (GtkWidget* notebook, gpointer user_data)
-{
-        if (strncmp (verified_password, password, 255) == 0 && password != NULL) {
-                if (DEBUG_MODE == TRUE) {
-                        printf ("Passwords match.\n");
-                }
-
-                gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-        } else {
-                if (DEBUG_MODE == TRUE) {
-                        printf ("Passwords do not match.\n");
-                }
-        }
-}
-
 //Function to handle when the user chooses advanced mode
 static void advanced_clicked (GtkWidget* notebook, gpointer user_data)
 {
@@ -234,7 +177,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* find_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* users_box = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
         GtkWidget* choose_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* full_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* advanced_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -243,7 +185,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         GtkWidget* welcome_label = gtk_label_new ("Welcome");
         GtkWidget* find_label = gtk_label_new ("Find");
         GtkWidget* date_time_label = gtk_label_new ("Date/Time");
-        GtkWidget* users_label = gtk_label_new ("Users");
         GtkWidget* choose_label = gtk_label_new ("Choose");
         GtkWidget* full_label = gtk_label_new ("Full Disk Mode");
         GtkWidget* advanced_label = gtk_label_new ("Advanced Mode");
@@ -291,26 +232,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         //Declaration/instantiation of the city button and the icon
         GtkWidget* advanced_button = gtk_button_new_with_label ("Advanced mode");
 
-        //Declaration/instantiation of the widgets for the user name
-        GtkWidget* user_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
-        GtkWidget* user_name_label = gtk_label_new ("User Name");
-        GtkWidget* user_name_entry = gtk_entry_new ();
-
-        //Declaration/instantiation of the widgets for the full name
-        GtkWidget* full_name_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
-        GtkWidget* full_name_label = gtk_label_new ("Full Name");
-        GtkWidget* full_name_entry = gtk_entry_new ();
-
-        //Declaration/instantiation of the widgets for the password
-        GtkWidget* password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
-        GtkWidget* password_label = gtk_label_new ("Password");
-        GtkWidget* password_entry = gtk_entry_new ();
-
-        //Declaration/instantiation of the widgets for the password verification
-        GtkWidget* verify_password_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BOX_SPACING);
-        GtkWidget* verify_password_label = gtk_label_new ("Verify Password");
-        GtkWidget* verify_password_entry = gtk_entry_new ();
-
         //Assigns properties to the window
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "data/images/live.png", NULL);
@@ -328,16 +249,14 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), find_button_box, find_label, 1);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 2);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), users_box, users_label, 3);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), choose_button_box, choose_label, 4);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), full_button_box, full_label, 5);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), choose_button_box, choose_label, 3);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), full_button_box, full_label, 4);
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), advanced_button_box, advanced_label, 5);
 
         //Sets button box layouts
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (find_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_SPREAD);
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (users_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (choose_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (full_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (advanced_button_box), GTK_BUTTONBOX_SPREAD);
@@ -415,27 +334,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_button_set_relief (GTK_BUTTON (full_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (advanced_button), GTK_RELIEF_NONE);
 
-        //Sets user tab label properties
-        gtk_label_set_width_chars (GTK_LABEL (user_name_label), ENTRY_WIDTH);
-        gtk_label_set_xalign (GTK_LABEL (user_name_label), ALIGN_LEFT);
-        gtk_label_set_width_chars (GTK_LABEL (full_name_label), ENTRY_WIDTH);
-        gtk_label_set_xalign (GTK_LABEL (full_name_label), ALIGN_LEFT);
-        gtk_label_set_width_chars (GTK_LABEL (password_label), ENTRY_WIDTH);
-        gtk_label_set_xalign (GTK_LABEL (password_label), ALIGN_LEFT);
-        gtk_label_set_width_chars (GTK_LABEL (verify_password_label), ENTRY_WIDTH);
-        gtk_label_set_xalign (GTK_LABEL (verify_password_label), ALIGN_LEFT);
-
-        //Removes character visibility from the password entry objects
-        gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
-        gtk_entry_set_visibility (GTK_ENTRY (verify_password_entry), FALSE);
-
-        //Connects each entry on the user tab to a function
-        g_signal_connect (user_name_entry, "changed", G_CALLBACK (user_name_entered), user_name_entry);
-        g_signal_connect (full_name_entry, "changed", G_CALLBACK (full_name_entered), full_name_entry);
-        g_signal_connect (password_entry, "changed", G_CALLBACK (password_entered), password_entry);
-        g_signal_connect (verify_password_entry, "changed", G_CALLBACK (password_verification_entered), verify_password_entry);
-        g_signal_connect_swapped (verify_password_entry, "changed", G_CALLBACK (check_passwords), notebook);
-
         //Adds buttons to button boxes
         gtk_container_add (GTK_CONTAINER (window), notebook);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
@@ -445,18 +343,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_container_add (GTK_CONTAINER (find_button_box), manual_button);
         gtk_container_add (GTK_CONTAINER (date_time_button_box), region_button);
         gtk_container_add (GTK_CONTAINER (date_time_button_box), city_button);
-        gtk_container_add (GTK_CONTAINER (user_name_box), user_name_label);
-        gtk_container_add (GTK_CONTAINER (user_name_box), user_name_entry);
-        gtk_container_add (GTK_CONTAINER (users_box), user_name_box);
-        gtk_container_add (GTK_CONTAINER (full_name_box), full_name_label);
-        gtk_container_add (GTK_CONTAINER (full_name_box), full_name_entry);
-        gtk_container_add (GTK_CONTAINER (users_box), full_name_box);
-        gtk_container_add (GTK_CONTAINER (password_box), password_label);
-        gtk_container_add (GTK_CONTAINER (password_box), password_entry);
-        gtk_container_add (GTK_CONTAINER (users_box), password_box);
-        gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_label);
-        gtk_container_add (GTK_CONTAINER (verify_password_box), verify_password_entry);
-        gtk_container_add (GTK_CONTAINER (users_box), verify_password_box);
         gtk_container_add (GTK_CONTAINER (choose_button_box), full_button);
         gtk_container_add (GTK_CONTAINER (choose_button_box), advanced_button);
 
