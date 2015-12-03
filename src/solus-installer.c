@@ -26,10 +26,6 @@
 static void quit_installer_clicked (GtkWidget* window, gpointer user_data);
 static void whats_new_clicked (GtkWidget* window, gpointer user_data);
 static void install_solus_clicked (GtkWidget* notebook, gpointer user_data);
-static void find_clicked (GtkWidget* notebook, gpointer user_data);
-static void manual_clicked (GtkWidget* notebook, gpointer user_data);
-static void region_clicked (char* selected_region, gpointer user_data);
-static void city_entered (GtkWidget* notebook, gpointer user_data);
 static void full_disk_clicked (GtkWidget* notebook, gpointer user_data);
 static void advanced_clicked (GtkWidget* notebook, gpointer user_data);
 //static void install_warning (GtkWidget* window, gpointer user_data);
@@ -79,43 +75,6 @@ static void install_solus_clicked (GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf ("Install Solus clicked.\n");
-        }
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-}
-
-//Function to find the user's location automatically
-static void find_clicked (GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf ("Find location automatically entered.\n");
-        }
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-}
-
-//Function to let the user select their timezone manually
-static void manual_clicked (GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf ("Find location manually entered.\n");
-        }
-        gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
-}
-
-//Function to handle when the region is entered
-static void region_clicked (char* selected_region, gpointer user_data)
-{
-        region = selected_region;
-        if (DEBUG_MODE == TRUE) {
-                printf ("Region is now %s.\n", region);
-        }
-}
-
-//Function to handle when the city is entered
-static void city_entered (GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf ("City clicked.\n");
         }
         gtk_notebook_next_page (GTK_NOTEBOOK (notebook));
 }
@@ -175,16 +134,12 @@ static void activate (GtkApplication* app, gpointer user_data)
 
         //Declaration/instantiation of the button boxes
         GtkWidget* welcome_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* find_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* date_time_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* choose_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* full_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* advanced_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
 
         //Declaration/instantiation of the tab labels
         GtkWidget* welcome_label = gtk_label_new ("Welcome");
-        GtkWidget* find_label = gtk_label_new ("Find");
-        GtkWidget* date_time_label = gtk_label_new ("Date/Time");
         GtkWidget* choose_label = gtk_label_new ("Choose");
         GtkWidget* full_label = gtk_label_new ("Full Disk Mode");
         GtkWidget* advanced_label = gtk_label_new ("Advanced Mode");
@@ -202,29 +157,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         //Declaration/instantiation of the install button and the icon
         GtkWidget* install_button = gtk_button_new_with_label ("Install Solus");
         GtkWidget* install_icon = gtk_image_new_from_file ("data/images/install.png");
-
-        //Declaration/instantiation of the find button and the icon
-        GtkWidget* find_button = gtk_button_new_with_label ("Find location automatically");
-        GtkWidget* find_icon = gtk_image_new_from_file ("data/images/find.png");
-
-        //Declaration/instantiation of the find button and the icon
-        GtkWidget* manual_button = gtk_button_new_with_label ("Find location manually");
-        GtkWidget* manual_icon = gtk_image_new_from_file ("data/images/manual.png");
-
-        //Declaration/instantiation of the region button and the icon
-        GtkWidget* region_button = gtk_menu_button_new ();
-        GtkWidget* region_icon = gtk_image_new_from_file ("data/images/region.png");
-
-        //Declaration/instantiation of the city button and the icon
-        GtkWidget* city_button = gtk_button_new_with_label ("City");
-        //GtkWidget* city_icon = gtk_image_new_from_file ("../data/city.png");
-
-        //Declaration/instantiation of the region menu
-        GtkWidget* region_menu = gtk_menu_new ();
-
-        //Declaration/instantiation of the region menu items
-        GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label ("America");
-        GtkWidget* region_menu_item_not_america = gtk_menu_item_new_with_label ("Everywhere else");
 
         //Declaration/instantiation of the city button and the icon
         GtkWidget* full_button = gtk_button_new_with_label ("Full disk mode (Recommended)");
@@ -247,16 +179,12 @@ static void activate (GtkApplication* app, gpointer user_data)
                 gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
         }
         gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), welcome_button_box, welcome_label, 0);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), find_button_box, find_label, 1);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), date_time_button_box, date_time_label, 2);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), choose_button_box, choose_label, 3);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), full_button_box, full_label, 4);
-        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), advanced_button_box, advanced_label, 5);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), choose_button_box, choose_label, 1);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), full_button_box, full_label, 2);
+        gtk_notebook_insert_page (GTK_NOTEBOOK (notebook), advanced_button_box, advanced_label, 3);
 
         //Sets button box layouts
         gtk_button_box_set_layout (GTK_BUTTON_BOX (welcome_button_box), GTK_BUTTONBOX_SPREAD);
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (find_button_box), GTK_BUTTONBOX_SPREAD);
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (date_time_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (choose_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (full_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout (GTK_BUTTON_BOX (advanced_button_box), GTK_BUTTONBOX_SPREAD);
@@ -279,46 +207,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_button_set_image_position (GTK_BUTTON (install_button), GTK_POS_TOP);
         g_signal_connect_swapped (install_button, "clicked", G_CALLBACK (install_solus_clicked), notebook);
 
-        //Assigns an image to the find button and connects a function to the button
-        gtk_button_set_always_show_image (GTK_BUTTON (find_button), TRUE);
-        gtk_button_set_image (GTK_BUTTON (find_button), find_icon);
-        gtk_button_set_image_position (GTK_BUTTON (find_button), GTK_POS_TOP);
-        g_signal_connect_swapped (find_button, "clicked", G_CALLBACK (find_clicked), notebook);
-
-        //Assigns an image to the manual button and connects a function to the button
-        gtk_button_set_always_show_image (GTK_BUTTON (manual_button), TRUE);
-        gtk_button_set_image (GTK_BUTTON (manual_button), manual_icon);
-        gtk_button_set_image_position (GTK_BUTTON (manual_button), GTK_POS_TOP);
-        g_signal_connect_swapped (manual_button, "clicked", G_CALLBACK (manual_clicked), notebook);
-
-        //Assigns an image to the region button and connects a function to the button
-        gtk_button_set_always_show_image (GTK_BUTTON (region_button), TRUE);
-        gtk_button_set_image (GTK_BUTTON (region_button), region_icon);
-        gtk_button_set_image_position (GTK_BUTTON (region_button), GTK_POS_TOP);
-
-        //Sets the label on the region button
-        gtk_button_set_label (GTK_BUTTON (region_button), "Region");
-
-        /*
-        //Assigns an image to the city button and connects a function to the button
-        gtk_button_set_always_show_image (GTK_BUTTON (city_button), TRUE);
-        gtk_button_set_image (GTK_BUTTON (city_button), city_icon);
-        gtk_button_set_image_position (GTK_BUTTON (city_button), GTK_POS_TOP);
-        */
-        g_signal_connect_swapped (city_button, "clicked", G_CALLBACK (city_entered), notebook);
-
-        //Attaches the region menu items to the region menu
-        gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_america, 0, 1, 0, 1);
-        gtk_menu_attach (GTK_MENU (region_menu), region_menu_item_not_america, 0, 1, 1, 2);
-
-        //Adds the region menu to the region button and displays the region menu
-        gtk_menu_button_set_popup (GTK_MENU_BUTTON (region_button), region_menu);
-        gtk_widget_show_all (region_menu);
-
-        //Connects each menu item to a function
-        g_signal_connect_swapped (region_menu_item_america, "activate", G_CALLBACK (region_clicked), "America");
-        g_signal_connect_swapped (region_menu_item_not_america, "activate", G_CALLBACK (region_clicked), "Somewhere");
-
         //Connects the partitioning choice buttons to functions
         g_signal_connect_swapped (full_button, "clicked", G_CALLBACK (full_disk_clicked), notebook);
         g_signal_connect_swapped (advanced_button, "clicked", G_CALLBACK (advanced_clicked), notebook);
@@ -327,10 +215,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_button_set_relief (GTK_BUTTON (livecd_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (new_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (install_button), GTK_RELIEF_NONE);
-        gtk_button_set_relief (GTK_BUTTON (find_button), GTK_RELIEF_NONE);
-        gtk_button_set_relief (GTK_BUTTON (manual_button), GTK_RELIEF_NONE);
-        gtk_button_set_relief (GTK_BUTTON (region_button), GTK_RELIEF_NONE);
-        //gtk_button_set_relief (GTK_BUTTON (city_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (full_button), GTK_RELIEF_NONE);
         gtk_button_set_relief (GTK_BUTTON (advanced_button), GTK_RELIEF_NONE);
 
@@ -339,10 +223,6 @@ static void activate (GtkApplication* app, gpointer user_data)
         gtk_container_add (GTK_CONTAINER (welcome_button_box), livecd_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), new_button);
         gtk_container_add (GTK_CONTAINER (welcome_button_box), install_button);
-        gtk_container_add (GTK_CONTAINER (find_button_box), find_button);
-        gtk_container_add (GTK_CONTAINER (find_button_box), manual_button);
-        gtk_container_add (GTK_CONTAINER (date_time_button_box), region_button);
-        gtk_container_add (GTK_CONTAINER (date_time_button_box), city_button);
         gtk_container_add (GTK_CONTAINER (choose_button_box), full_button);
         gtk_container_add (GTK_CONTAINER (choose_button_box), advanced_button);
 
