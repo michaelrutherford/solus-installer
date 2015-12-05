@@ -20,7 +20,7 @@
 #include "solus-installer.h"
 #include <gtk/gtk.h>
 #include <stdlib.h>
-#include <string.h>
+#include <parted/parted.h>
 
 //Function prototypes
 static void quit_installer_clicked (GtkWidget* window, gpointer user_data);
