@@ -1,4 +1,4 @@
-#solus-installer
+# solus-installer
 
 ## About
 solus-installer is an installer for the [Solus](https://solus-project.com/) operating system.
