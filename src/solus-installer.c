@@ -1,4 +1,4 @@
-/* Copyright 2015 Michael Rutherford
+/* Copyright 2015-2016 Michael Rutherford
 *
 * This file is part of solus-installer.
 *
