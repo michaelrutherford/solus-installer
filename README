@@ -3,6 +3,12 @@ solus-installer
         About
                 solus-installer is an installer for the Solus operating system.
 
+	Dependencies
+		* binutils
+		* gtk-2-dev
+		* gtk-3-dev
+		* libparted-dev
+
         Compiling
                 Navigate to the root directory of solus-installer and run the following command:
                         sh install.sh
@@ -15,9 +21,6 @@ solus-installer
                 solus-installer is licensed under GPLv2, see LICENSE
    
         Links
-                GPL Version 2:
-                        http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
-                GTK+ Project:
-                        http://www.gtk.org/
-                Solus Project:
-                        https://solus-project.com/
+                * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+                * http://www.gtk.org/
+                * https://solus-project.com/
