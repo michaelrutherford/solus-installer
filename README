@@ -5,9 +5,9 @@ solus-installer
 
 	Dependencies
 		* binutils
-		* gtk-2-dev
 		* gtk-3-dev
 		* libparted-dev
+		* pkg-config
 
         Compiling
                 Navigate to the root directory of solus-installer and run the following command:
