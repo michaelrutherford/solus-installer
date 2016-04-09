@@ -5,8 +5,8 @@ Readme
 
 	Dependencies
 		* binutils
-		* gtk-3-devel
-		* libparted-devel
+		* gtk-3-dev
+		* libparted-dev
 		* pkg-config
 
         Compiling
