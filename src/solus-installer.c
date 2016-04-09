@@ -222,7 +222,7 @@ static void activate (GtkApplication* app, gpointer user_data)
         /* Declaration/instantiation of the advanced install button */
         GtkWidget* advanced_button = gtk_button_new_with_label ("Advanced mode");
 
-        /* Assigns properties to the window *
+        /* Assigns properties to the window */
         gtk_window_set_title (GTK_WINDOW (window), "solus-installer");
         gtk_window_set_icon_from_file (GTK_WINDOW (window), "data/images/live.png", NULL);
         gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
