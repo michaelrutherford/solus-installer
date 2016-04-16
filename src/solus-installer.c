@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <parted/parted.h>
 #include "solus-installer.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /* Function prototypes */
