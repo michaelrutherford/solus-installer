@@ -18,10 +18,10 @@
  */
 
 /* Imported header files */
-#include "solus-installer.h"
 #include <gtk/gtk.h>
-#include <stdlib.h>
 #include <parted/parted.h>
+#include "solus-installer.h"
+#include <stdlib.h>
 
 /* Function prototypes */
 static void quit_installer_clicked(GtkWidget* window, gpointer user_data);
@@ -40,6 +40,24 @@ char* user_name;
 char* full_name;
 char* password;
 char* verified_password;
+
+/* Function to let the user go to the previous notebook page */
+static void previous_clicked(GtkWidget* notebook, gpointer user_data)
+{
+        if (DEBUG_MODE == TRUE) {
+                printf("Next page.\n");
+        }
+        gtk_notebook_prev_page(GTK_NOTEBOOK (notebook));
+}
+
+/* Function to let the user go to the next notebook page */
+static void next_clicked(GtkWidget* notebook, gpointer user_data)
+{
+        if (DEBUG_MODE == TRUE) {
+                printf("Next page.\n");
+        }
+        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
+}
 
 /* Function to destroy the window so that the installer quits */
 static void quit_installer_clicked(GtkWidget* window, gpointer user_data)
@@ -87,7 +105,6 @@ static void install_solus_clicked(GtkWidget* notebook, gpointer user_data)
         if (DEBUG_MODE == TRUE) {
                 printf("Install Solus clicked.\n");
         }
-        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
 }
 
 /* Function to find the user's location automatically */
@@ -96,8 +113,6 @@ static void find_clicked(GtkWidget* notebook, gpointer user_data)
         if (DEBUG_MODE == TRUE) {
                 printf("Find location automatically entered.\n");
         }
-        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
-        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
 }
 
 /* Function to let the user select their timezone manually */
@@ -106,7 +121,6 @@ static void manual_clicked(GtkWidget* notebook, gpointer user_data)
         if (DEBUG_MODE == TRUE) {
                 printf("Find location manually entered.\n");
         }
-        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
 }
 
 /* Function to handle when the region is entered */
@@ -124,7 +138,6 @@ static void advanced_clicked(GtkWidget* notebook, gpointer user_data)
         if (DEBUG_MODE == TRUE) {
                 printf("Advanced mode entered.\n");
         }
-        gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
 }
 
 /* Function to handle when the user chooses full disk mode */
@@ -133,8 +146,6 @@ static void full_disk_clicked(GtkWidget* notebook, gpointer user_data)
         if (DEBUG_MODE == TRUE) {
                 printf("Full disk mode entered.\n");
         }
-        gtk_notebook_next_page(GTK_NOTEBOOK(notebook));
-        gtk_notebook_next_page(GTK_NOTEBOOK(notebook));
 }
 
 /* Function to display an installation warning
@@ -167,6 +178,20 @@ static void activate(GtkApplication* app, gpointer user_data)
         GtkWidget* window = gtk_application_window_new(app);
         GtkWidget* notebook = gtk_notebook_new();
 
+        /* Declaration/instantiation of the main box */
+        GtkWidget* main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+
+        /* Declaration/instantiation of the navigation button box */
+        GtkWidget* navigation_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+
+        /* Declaration/instantiation of the notebook boxes */
+        GtkWidget* welcome_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* find_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* date_time_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* choose_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* full_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* advanced_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+
         /* Declaration/instantiation of the button boxes */
         GtkWidget* welcome_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
         GtkWidget* find_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
@@ -183,7 +208,19 @@ static void activate(GtkApplication* app, gpointer user_data)
         GtkWidget* full_label = gtk_label_new("Full Disk Mode");
         GtkWidget* advanced_label = gtk_label_new("Advanced Mode");
 
-        /* GtkWidget* welcome_title_label = gtk_label_new("Welcome to Solus Operating System"); */
+        /* Declaration/instantiation of the title labels */
+        GtkWidget* welcome_title_label = gtk_label_new("Welcome to Solus Operating System");
+        GtkWidget* find_title_label = gtk_label_new("Where are you located?");
+        GtkWidget* date_time_title_label = gtk_label_new("What time is it?");
+        GtkWidget* choose_title_label = gtk_label_new("Full disk mode or advanced mode?");
+        GtkWidget* full_title_label = gtk_label_new("Full disk install.");
+        GtkWidget* advanced_title_label = gtk_label_new("Advanced install.");
+
+        /* Declaration/instantiation of the livecd button and the icon */
+        GtkWidget* previous_button = gtk_button_new_with_label("Previous");
+
+        /* Declaration/instantiation of the livecd button and the icon */
+        GtkWidget* next_button = gtk_button_new_with_label("Next");
 
         /* Declaration/instantiation of the new button and the icon */
         GtkWidget* new_button = gtk_button_new_with_label("What's New In Solus?");
@@ -229,19 +266,19 @@ static void activate(GtkApplication* app, gpointer user_data)
         gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_X, WINDOW_Y);
         gtk_window_set_resizable(GTK_WINDOW(window), TRUE);
 
-        /* Sets the tabs positions and adds pages with labels */
+        /* Sets the tab position and adds pages with labels */
         gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
         if (DEBUG_MODE == TRUE) {
                 gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), TRUE);
         } else {
                 gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
         }
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), welcome_button_box, welcome_label, 0);
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), find_button_box, find_label, 1);
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), date_time_button_box, date_time_label, 2);
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), choose_button_box, choose_label, 3);
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), full_button_box, full_label, 4);
-        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), advanced_button_box, advanced_label, 5);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), welcome_notebook_box, welcome_label, 0);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), find_notebook_box, find_label, 1);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), date_time_notebook_box, date_time_label, 2);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), choose_notebook_box, choose_label, 3);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), full_notebook_box, full_label, 4);
+        gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), advanced_notebook_box, advanced_label, 5);
 
         /* Sets button box layouts */
         gtk_button_box_set_layout(GTK_BUTTON_BOX(welcome_button_box), GTK_BUTTONBOX_SPREAD);
@@ -250,6 +287,7 @@ static void activate(GtkApplication* app, gpointer user_data)
         gtk_button_box_set_layout(GTK_BUTTON_BOX(choose_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout(GTK_BUTTON_BOX(full_button_box), GTK_BUTTONBOX_SPREAD);
         gtk_button_box_set_layout(GTK_BUTTON_BOX(advanced_button_box), GTK_BUTTONBOX_SPREAD);
+        gtk_button_box_set_layout(GTK_BUTTON_BOX(navigation_button_box), GTK_BUTTONBOX_SPREAD);
 
         /* Assigns an image to the livecd button and connects a function to the button */
         gtk_button_set_always_show_image(GTK_BUTTON(livecd_button), TRUE);
@@ -285,6 +323,10 @@ static void activate(GtkApplication* app, gpointer user_data)
         gtk_button_set_always_show_image(GTK_BUTTON(region_button), TRUE);
         gtk_button_set_image(GTK_BUTTON(region_button), region_icon);
         gtk_button_set_image_position(GTK_BUTTON(region_button), GTK_POS_TOP);
+
+        /* Connects a function to each of the navigation buttons */
+        g_signal_connect_swapped(previous_button, "clicked", G_CALLBACK(previous_clicked), notebook);
+        g_signal_connect_swapped(next_button, "clicked", G_CALLBACK(next_clicked), notebook);
         
         /* Sets the label on the region button */
         gtk_button_set_label(GTK_BUTTON(region_button), "Region");
@@ -315,8 +357,10 @@ static void activate(GtkApplication* app, gpointer user_data)
         gtk_button_set_relief(GTK_BUTTON(full_button), GTK_RELIEF_NONE);
         gtk_button_set_relief(GTK_BUTTON(advanced_button), GTK_RELIEF_NONE);
 
+        /* Adds the main box to the window */
+        gtk_container_add(GTK_CONTAINER(window), main_box);
+
         /* Adds buttons to button boxes */
-        gtk_container_add(GTK_CONTAINER(window), notebook);
         gtk_container_add(GTK_CONTAINER(welcome_button_box), livecd_button);
         gtk_container_add(GTK_CONTAINER(welcome_button_box), new_button);
         gtk_container_add(GTK_CONTAINER(welcome_button_box), install_button);
@@ -325,6 +369,26 @@ static void activate(GtkApplication* app, gpointer user_data)
         gtk_container_add(GTK_CONTAINER(date_time_button_box), region_button);
         gtk_container_add(GTK_CONTAINER(choose_button_box), full_button);
         gtk_container_add(GTK_CONTAINER(choose_button_box), advanced_button);
+
+        /* Adds navigation buttons to the navigation button box */
+        gtk_container_add(GTK_CONTAINER(navigation_button_box), previous_button);
+        gtk_container_add(GTK_CONTAINER(navigation_button_box), next_button);
+
+        /* Packs widgets into parent boxes */
+        gtk_box_pack_start(GTK_BOX(main_box), notebook, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(welcome_notebook_box), welcome_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(welcome_notebook_box), welcome_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(find_notebook_box), find_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(find_notebook_box), find_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(date_time_notebook_box), date_time_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(date_time_notebook_box), date_time_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(choose_notebook_box), choose_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(choose_notebook_box), choose_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(full_notebook_box), full_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(full_notebook_box), full_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(advanced_notebook_box), advanced_title_label, FALSE, FALSE, 10);
+        gtk_box_pack_end(GTK_BOX(advanced_notebook_box), advanced_button_box, TRUE, TRUE, 0);
+        gtk_box_pack_end(GTK_BOX(main_box), navigation_button_box, FALSE, FALSE, 10);
 
         /* Displays the window and all the widgets attached to it */
         gtk_widget_show_all(window);
@@ -339,8 +403,8 @@ int main(int argc, char **argv)
 
         /* Instantiation of the GtkApplication and the status */
         app = gtk_application_new("com.solus-project.installer", G_APPLICATION_FLAGS_NONE);
-        g_signal_connect(app, "activate", G_CALLBACK (activate), NULL);
-        status = g_application_run (G_APPLICATION(app), argc, argv);
+        g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+        status = g_application_run(G_APPLICATION(app), argc, argv);
         g_object_unref(app);
 
         /* Returns the status of the applicaton */
