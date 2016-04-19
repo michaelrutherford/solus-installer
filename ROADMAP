@@ -1,0 +1,34 @@
+Roadmap
+
+General
+        * Detect if device is a laptop early and warn user if not plugged into power
+        * Help option with live help (opens hexchat and joins #Solus)
+        * Boost UEFI detection/installer process
+        * Hide any technical details ie files being copied as some users may be intimidated by it or confused. Include option for details to see what’s happening. Use generic terms like “Installing files”, “Configuring final system settings” for instance.
+        * Ensure zero technical terms in areas that aren’t an advanced mode
+        * Increase checks/verifications on install process including file copy procedure (sha256 or sha1 etc the files to ensure they copied correctly?)
+        * Post-installation options
+                * Installation
+                        * Update all packages before reboot (show how many packages/MB and let user decide)
+                        * Libreoffice
+                        * Drivers
+                        * Swap Browser/Email out for X/Y
+Users
+        * User adding should be only one user with an option before continuing past the user section to add further users.
+        * Better username/password issue detection and user notification
+Partitioning
+        * Wizard vs Advanced partitioning sections
+        * Advanced Mode
+                * Manual partitioning via GParted
+                * Manual mount point selection
+                * Format Y/N option
+                * Drive/Partition Encryption
+                * If no SWAP added, display warning that Hibernate requires it
+                * Choice of filesystem for each partition (ext4, xfs, etc)
+        * Full-disk mode
+                * Erase a disk and partition the whole thing to use Solus
+                * Plenty of warnings etc
+                * Partition half of physical RAM to SWAP
+                * Remainder to root (ext4)
+                * Wizard mode to auto-resize partitions
+                * Re-size partitions where existing OS is and create root (ext4) of min 8GB and SWAP of half of physical RAM
