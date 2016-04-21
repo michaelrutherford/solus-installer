@@ -1,7 +1,6 @@
 Contributing
 
         Coding Style
-
                 * Camel case is strictly forbidden.
                 * Underscores are used to separate words when naming variables or functions.
                 * Indents are 8 spaces and tabs are forbidden. 
@@ -16,7 +15,6 @@ Contributing
                 * Single line if and else statements must have curly braces.
 
         Commits
-
                 * Commit messages must be 80 characters or less.
                 * The purpose of the commit is clearly defined in the commit message.
                 * Don't group together large changes into one commit, break them up into multiple commits.
@@ -24,6 +22,5 @@ Contributing
                 * Never make jokes or use vulgar language in commit messages.
 
         Pull Requests
-
                 * When making a pull request, make sure all of the rules specified in this file are followed.
                 * If your pull request is denied or closed, do not re-open it unless asked to.
