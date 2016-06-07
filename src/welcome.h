@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015-2016 Michael Rutherford
  *
  * This file is part of solus-installer.
@@ -17,24 +17,14 @@
  * with solus-installer. If not, see http://www.gnu.org/licenses/.
  */
 
-#ifndef solus_installer_h
-#define solus_installer_h
+#ifndef welcome_h
+#define welcome_h
 
 #include <gtk/gtk.h>
 
-/* Defines global constants */
-#define WINDOW_X 750
-#define WINDOW_Y 350
-#define DIALOG_X 250
-#define DIALOG_Y 250
-#define ENTRY_WIDTH 15
-#define ALIGN_LEFT 0
-#define BOX_SPACING 5
-#define DEBUG_MODE FALSE
-
-/* Function prototypes */
-void full_disk_clicked(GtkWidget* notebook, gpointer user_data);
-void advanced_clicked(GtkWidget* notebook, gpointer user_data);
-/* void install_warning(GtkWidget* window, gpointer user_data); */
+/* Welcome function prototypes */
+void quit_installer_clicked(GtkWidget* window, gpointer user_data);
+void whats_new_clicked(GtkWidget* window, gpointer user_data);
+void install_solus_clicked(GtkWidget* notebook, gpointer user_data);
 
 #endif

@@ -23,17 +23,8 @@
 #include "solus-installer.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-/* Function prototypes */
-static void quit_installer_clicked(GtkWidget* window, gpointer user_data);
-static void whats_new_clicked(GtkWidget* window, gpointer user_data);
-static void install_solus_clicked(GtkWidget* notebook, gpointer user_data);
-static void find_clicked(GtkWidget* notebook, gpointer user_data);
-static void manual_clicked(GtkWidget* notebook, gpointer user_data);
-static void region_clicked(char* selected_region, gpointer user_data);
-static void full_disk_clicked(GtkWidget* notebook, gpointer user_data);
-static void advanced_clicked(GtkWidget* notebook, gpointer user_data);
-/* static void install_warning(GtkWidget* window, gpointer user_data); */
+#include "timezone.h"
+#include "welcome.h"
 
 /* Declares strings to store timezone and user data */
 char* region;
@@ -52,7 +43,7 @@ static void previous_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to let the user go to the next notebook page */
-static void next_clicked(GtkWidget* notebook, gpointer user_data)
+void next_clicked(GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Next page.\n");
@@ -60,81 +51,8 @@ static void next_clicked(GtkWidget* notebook, gpointer user_data)
         gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
 }
 
-/* Function to destroy the window so that the installer quits */
-static void quit_installer_clicked(GtkWidget* window, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Quit installer clicked.\n");
-        }
-        gtk_widget_destroy(window);
-        exit(EXIT_SUCCESS);
-}
-
-/* Function to display changelog for Solus */
-static void whats_new_clicked(GtkWidget* window, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("What's new clicked.\n");
-        }
-
-        /* Declaration/instantiation of the changelog dialog */
-        GtkWidget* new_dialog = gtk_dialog_new_with_buttons("What's new?",
-                                                            GTK_WINDOW(window),
-                                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                            "_OK",
-                                                            GTK_RESPONSE_ACCEPT,
-                                                            NULL);
-
-        /* Declaration/instantiation of the changelog content area and text */
-        GtkWidget* new_content_area = gtk_dialog_get_content_area(GTK_DIALOG (new_dialog));
-        GtkWidget* changelog_text = gtk_label_new("Solus Release 1.2");
-
-        /* Sets the dialog window size and adds */
-        gtk_window_set_default_size(GTK_WINDOW(new_dialog), DIALOG_X, DIALOG_Y);
-        gtk_container_add(GTK_CONTAINER(new_content_area), changelog_text);
-
-        /* Connects the dialog button to a function */
-        g_signal_connect_swapped(new_dialog, "response", G_CALLBACK(gtk_widget_destroy), new_dialog);
-
-        /* Shows the changelog dialog widget */
-        gtk_widget_show_all(new_dialog);
-}
-
-/* Function to destroy the window so that the installer quits */
-static void install_solus_clicked(GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Install Solus clicked.\n");
-        }
-}
-
-/* Function to find the user's location automatically */
-static void find_clicked(GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Find location automatically entered.\n");
-        }
-}
-
-/* Function to let the user select their timezone manually */
-static void manual_clicked(GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Find location manually entered.\n");
-        }
-}
-
-/* Function to handle when the region is entered */
-static void region_clicked(char* selected_region, gpointer user_data)
-{
-        region = selected_region;
-        if (DEBUG_MODE == TRUE) {
-                printf("Region is now %s.\n", region);
-        }
-}
-
 /* Function to handle when the user chooses advanced mode */
-static void advanced_clicked(GtkWidget* notebook, gpointer user_data)
+void advanced_clicked(GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Advanced mode entered.\n");
@@ -142,7 +60,7 @@ static void advanced_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to handle when the user chooses full disk mode */
-static void full_disk_clicked(GtkWidget* notebook, gpointer user_data)
+void full_disk_clicked(GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Full disk mode entered.\n");
