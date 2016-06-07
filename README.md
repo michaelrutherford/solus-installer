@@ -12,11 +12,11 @@ solus-installer is an installer for the [Solus](https://solus-project.com/) oper
 ## Compiling
 *Navigate to the root directory of solus-installer and run the following command:*
 ```
-sh install.sh
+sh build.sh
 ```
 
 ## Running
-*After compiling solus-installer, enter the following command:*
+*After compiling solus-installer, navigate to the build directory and enter the following command:*
 ```
 ./solus-installer
 ```
