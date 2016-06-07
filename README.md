@@ -12,7 +12,7 @@ solus-installer is an installer for the [Solus](https://solus-project.com/) oper
 ## Compiling
 *Navigate to the root directory of solus-installer and run the following command:*
 ```
-gcc `pkg-config --cflags gtk+-3.0` src/solus-installer.c -o solus-installer `pkg-config --libs gtk+-3.0` -Wall --std=c11
+sh install.sh
 ```
 
 ## Running
