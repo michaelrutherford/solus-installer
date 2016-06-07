@@ -1,6 +1,9 @@
 # Binary of solus-installer
 solus-installer
 
+# Build directory
+/build/*
+
 # Object files
 *.o
 *.ko
