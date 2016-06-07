@@ -1,0 +1,26 @@
+# Contributing
+
+## Coding Style
+* Camel case is strictly forbidden.
+* Underscores are used to separate words when naming variables or functions.
+* Indents are 8 spaces and tabs are forbidden. 
+* Parentheses only need a space before them in conditional constructs.
+* Except for function declarations, curly braces always open on the same line.
+* Each case should be at the same indent level as the switch statement.
+* Stars in pointers are a prefix to the variable name, not a suffix to the type.
+* Always add function declarations.
+* Else statements start on the same line as the if statements closing curly brace.
+* Comments must go on the line above the code that it documents.
+* The 80 character limit is a guideline, not a rule.
+* Single line if and else statements must have curly braces.
+
+## Commits
+* Commit messages must be 80 characters or less.
+* The purpose of the commit is clearly defined in the commit message.
+* Don't group together large changes into one commit, break them up into multiple commits.
+* Do not end your commit message with punctuation.
+* Never make jokes or use vulgar language in commit messages.
+
+## Pull Requests
+* When making a pull request, make sure all of the rules specified in this file are followed.
+* If your pull request is denied or closed, do not re-open it unless asked to.
