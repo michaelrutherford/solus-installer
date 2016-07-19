@@ -22,4 +22,4 @@ sh build.sh
 ```
 
 ## License
-solus-installer is licensed under GPLv2, see LICENSE
+solus-installer is licensed under version 2 of the GPL, see LICENSE
