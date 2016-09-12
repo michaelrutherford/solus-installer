@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 
 /* Timezone function prototypes */
-void find_clicked(GtkWidget* notebook, gpointer user_data);
-void manual_clicked(GtkWidget* notebook, gpointer user_data);
-void region_clicked(char* selected_region, gpointer user_data);
+void find_clicked(GtkWidget *notebook, gpointer user_data);
+void manual_clicked(GtkWidget *notebook, gpointer user_data);
+void region_clicked(char *selected_region, gpointer user_data);
 
 #endif

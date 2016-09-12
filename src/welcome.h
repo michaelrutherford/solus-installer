@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 
 /* Welcome function prototypes */
-void quit_installer_clicked(GtkWidget* window, gpointer user_data);
-void whats_new_clicked(GtkWidget* window, gpointer user_data);
-void install_solus_clicked(GtkWidget* notebook, gpointer user_data);
+void quit_installer_clicked(GtkWidget *window, gpointer user_data);
+void whats_new_clicked(GtkWidget *window, gpointer user_data);
+void install_solus_clicked(GtkWidget *notebook, gpointer user_data);
 
 #endif

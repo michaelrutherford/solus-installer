@@ -33,8 +33,8 @@
 #define DEBUG_MODE FALSE
 
 /* Function prototypes */
-void previous_clicked(GtkWidget* notebook, gpointer user_data);
-void next_clicked(GtkWidget* notebook, gpointer user_data);
-/* void install_warning(GtkWidget* window, gpointer user_data); */
+void previous_clicked(GtkWidget *notebook, gpointer user_data);
+void next_clicked(GtkWidget *notebook, gpointer user_data);
+/* void install_warning(GtkWidget *window, gpointer user_data); */
 
 #endif

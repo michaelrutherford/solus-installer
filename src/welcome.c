@@ -23,7 +23,7 @@
 #include <stdlib.h>
 
 /* Function to destroy the window so that the installer quits */
-void quit_installer_clicked(GtkWidget* window, gpointer user_data)
+void quit_installer_clicked(GtkWidget *window, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Quit installer clicked.\n");
@@ -33,14 +33,14 @@ void quit_installer_clicked(GtkWidget* window, gpointer user_data)
 }
 
 /* Function to display changelog for Solus */
-void whats_new_clicked(GtkWidget* window, gpointer user_data)
+void whats_new_clicked(GtkWidget *window, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("What's new clicked.\n");
         }
 
         /* Declaration/instantiation of the changelog dialog */
-        GtkWidget* new_dialog = gtk_dialog_new_with_buttons("What's new?",
+        GtkWidget *new_dialog = gtk_dialog_new_with_buttons("What's new?",
                                                             GTK_WINDOW(window),
                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                                             "_OK",
@@ -48,8 +48,8 @@ void whats_new_clicked(GtkWidget* window, gpointer user_data)
                                                             NULL);
 
         /* Declaration/instantiation of the changelog content area and text */
-        GtkWidget* new_content_area = gtk_dialog_get_content_area(GTK_DIALOG (new_dialog));
-        GtkWidget* changelog_text = gtk_label_new("Solus Release X");
+        GtkWidget *new_content_area = gtk_dialog_get_content_area(GTK_DIALOG (new_dialog));
+        GtkWidget *changelog_text = gtk_label_new("Solus Release X");
 
         /* Sets the dialog window size and adds */
         gtk_window_set_default_size(GTK_WINDOW(new_dialog), DIALOG_X, DIALOG_Y);
@@ -63,7 +63,7 @@ void whats_new_clicked(GtkWidget* window, gpointer user_data)
 }
 
 /* Function to destroy the window so that the installer quits */
-void install_solus_clicked(GtkWidget* notebook, gpointer user_data)
+void install_solus_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Install Solus clicked.\n");

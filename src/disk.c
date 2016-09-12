@@ -22,7 +22,7 @@
 #include "solus-installer.h"
 
 /* Function to handle when the user chooses advanced mode */
-void advanced_clicked(GtkWidget* notebook, gpointer user_data)
+void advanced_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Advanced mode entered.\n");
@@ -30,7 +30,7 @@ void advanced_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to handle when the user chooses full disk mode */
-void full_disk_clicked(GtkWidget* notebook, gpointer user_data)
+void full_disk_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Full disk mode entered.\n");

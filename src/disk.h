@@ -23,7 +23,7 @@
 #include <gtk/gtk.h>
 
 /* Function prototypes */
-void full_disk_clicked(GtkWidget* notebook, gpointer user_data);
-void advanced_clicked(GtkWidget* notebook, gpointer user_data);
+void full_disk_clicked(GtkWidget *notebook, gpointer user_data);
+void advanced_clicked(GtkWidget *notebook, gpointer user_data);
 
 #endif

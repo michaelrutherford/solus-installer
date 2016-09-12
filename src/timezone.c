@@ -22,7 +22,7 @@
 #include "solus-installer.h"
 
 /* Function to find the user's location automatically */
-void find_clicked(GtkWidget* notebook, gpointer user_data)
+void find_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Find location automatically entered.\n");
@@ -30,7 +30,7 @@ void find_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to let the user select their timezone manually */
-void manual_clicked(GtkWidget* notebook, gpointer user_data)
+void manual_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Find location manually entered.\n");
@@ -38,9 +38,9 @@ void manual_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to handle when the region is entered */
-void region_clicked(char* selected_region, gpointer user_data)
+void region_clicked(char *selected_region, gpointer user_data)
 {
-        extern char* region;
+        extern char *region;
         region = selected_region;
         if (DEBUG_MODE == TRUE) {
                 printf("Region is now %s.\n", region);

@@ -28,14 +28,14 @@
 #include "welcome.h"
 
 /* Declares strings to store timezone and user data */
-char* region;
-char* user_name;
-char* full_name;
-char* password;
-char* verified_password;
+char *region;
+char *user_name;
+char *full_name;
+char *password;
+char *verified_password;
 
 /* Function to let the user go to the previous notebook page */
-void previous_clicked(GtkWidget* notebook, gpointer user_data)
+void previous_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Next page.\n");
@@ -44,7 +44,7 @@ void previous_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to let the user go to the next notebook page */
-void next_clicked(GtkWidget* notebook, gpointer user_data)
+void next_clicked(GtkWidget *notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Next page.\n");
@@ -53,11 +53,11 @@ void next_clicked(GtkWidget* notebook, gpointer user_data)
 }
 
 /* Function to display an installation warning
-static void install_warning(GtkWidget* window, gpointer user_data)
+static void install_warning(GtkWidget *window, gpointer user_data)
 {
         printf("Install warning displayed.\n");
         gint status;
-        GtkWidget* new_dialog = gtk_dialog_new_with_buttons("What's new?",
+        GtkWidget *new_dialog = gtk_dialog_new_with_buttons("What's new?",
                                                             GTK_WINDOW (window),
                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                                             "_OK",
@@ -73,95 +73,95 @@ static void install_warning(GtkWidget* window, gpointer user_data)
 */
 
 /* Function that is activated by the main function */
-static void activate(GtkApplication* app, gpointer user_data)
+static void activate(GtkApplication *app, gpointer user_data)
 {
         /* Makes the dark theme the default theme */
         g_object_set(gtk_settings_get_default(), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
         /* Declaration/instantiation of the window and notebook */
-        GtkWidget* window = gtk_application_window_new(app);
-        GtkWidget* notebook = gtk_notebook_new();
+        GtkWidget *window = gtk_application_window_new(app);
+        GtkWidget *notebook = gtk_notebook_new();
 
         /* Declaration/instantiation of the main box */
-        GtkWidget* main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
         /* Declaration/instantiation of the navigation button box */
-        GtkWidget* navigation_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *navigation_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
 
         /* Declaration/instantiation of the notebook boxes */
-        GtkWidget* welcome_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* find_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* date_time_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* choose_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* full_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* advanced_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *welcome_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *find_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *date_time_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *choose_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *full_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *advanced_notebook_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
         /* Declaration/instantiation of the button boxes */
-        GtkWidget* welcome_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* find_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* date_time_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* choose_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* full_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        GtkWidget* advanced_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *welcome_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *find_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *date_time_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *choose_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *full_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        GtkWidget *advanced_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
 
         /* Declaration/instantiation of the tab labels */
-        GtkWidget* welcome_label = gtk_label_new("Welcome");
-        GtkWidget* find_label = gtk_label_new("Find");
-        GtkWidget* date_time_label = gtk_label_new("Date/Time");
-        GtkWidget* choose_label = gtk_label_new("Choose");
-        GtkWidget* full_label = gtk_label_new("Full Disk Mode");
-        GtkWidget* advanced_label = gtk_label_new("Advanced Mode");
+        GtkWidget *welcome_label = gtk_label_new("Welcome");
+        GtkWidget *find_label = gtk_label_new("Find");
+        GtkWidget *date_time_label = gtk_label_new("Date/Time");
+        GtkWidget *choose_label = gtk_label_new("Choose");
+        GtkWidget *full_label = gtk_label_new("Full Disk Mode");
+        GtkWidget *advanced_label = gtk_label_new("Advanced Mode");
 
         /* Declaration/instantiation of the title labels */
-        GtkWidget* welcome_title_label = gtk_label_new("Welcome to Solus Operating System");
-        GtkWidget* find_title_label = gtk_label_new("Where are you located?");
-        GtkWidget* date_time_title_label = gtk_label_new("What time is it?");
-        GtkWidget* choose_title_label = gtk_label_new("Full disk mode or advanced mode?");
-        GtkWidget* full_title_label = gtk_label_new("Full disk install.");
-        GtkWidget* advanced_title_label = gtk_label_new("Advanced install.");
+        GtkWidget *welcome_title_label = gtk_label_new("Welcome to Solus Operating System");
+        GtkWidget *find_title_label = gtk_label_new("Where are you located?");
+        GtkWidget *date_time_title_label = gtk_label_new("What time is it?");
+        GtkWidget *choose_title_label = gtk_label_new("Full disk mode or advanced mode?");
+        GtkWidget *full_title_label = gtk_label_new("Full disk install.");
+        GtkWidget *advanced_title_label = gtk_label_new("Advanced install.");
 
         /* Declaration/instantiation of the livecd button and the icon */
-        GtkWidget* previous_button = gtk_button_new_with_label("Previous");
+        GtkWidget *previous_button = gtk_button_new_with_label("Previous");
 
         /* Declaration/instantiation of the livecd button and the icon */
-        GtkWidget* next_button = gtk_button_new_with_label("Next");
+        GtkWidget *next_button = gtk_button_new_with_label("Next");
 
         /* Declaration/instantiation of the new button and the icon */
-        GtkWidget* new_button = gtk_button_new_with_label("What's New In Solus?");
-        GtkWidget* new_icon = gtk_image_new_from_file("data/images/new.png");
+        GtkWidget *new_button = gtk_button_new_with_label("What's New In Solus?");
+        GtkWidget *new_icon = gtk_image_new_from_file("data/images/new.png");
 
         /* Declaration/instantiation of the livecd button and the icon */
-        GtkWidget* livecd_button = gtk_button_new_with_label("Keep Using LiveCD");
-        GtkWidget* livecd_icon = gtk_image_new_from_file("data/images/live.png");
+        GtkWidget *livecd_button = gtk_button_new_with_label("Keep Using LiveCD");
+        GtkWidget *livecd_icon = gtk_image_new_from_file("data/images/live.png");
 
         /* Declaration/instantiation of the install button and the icon */
-        GtkWidget* install_button = gtk_button_new_with_label("Install Solus");
-        GtkWidget* install_icon = gtk_image_new_from_file("data/images/install.png");
+        GtkWidget *install_button = gtk_button_new_with_label("Install Solus");
+        GtkWidget *install_icon = gtk_image_new_from_file("data/images/install.png");
         
         /* Declaration/instantiation of the find button and the icon */
-        GtkWidget* find_button = gtk_button_new_with_label("Find location automatically");
-        GtkWidget* find_icon = gtk_image_new_from_file("data/images/find.png");
+        GtkWidget *find_button = gtk_button_new_with_label("Find location automatically");
+        GtkWidget *find_icon = gtk_image_new_from_file("data/images/find.png");
         
         /* Declaration/instantiation of the find button and the icon */
-        GtkWidget* manual_button = gtk_button_new_with_label("Find location manually");
-        GtkWidget* manual_icon = gtk_image_new_from_file("data/images/manual.png");
+        GtkWidget *manual_button = gtk_button_new_with_label("Find location manually");
+        GtkWidget *manual_icon = gtk_image_new_from_file("data/images/manual.png");
         
         /* Declaration/instantiation of the region button and the icon */
-        GtkWidget* region_button = gtk_menu_button_new();
-        GtkWidget* region_icon = gtk_image_new_from_file("data/images/region.png");
+        GtkWidget *region_button = gtk_menu_button_new();
+        GtkWidget *region_icon = gtk_image_new_from_file("data/images/region.png");
         
         /* Declaration/instantiation of the region menu */
-        GtkWidget* region_menu = gtk_menu_new();
+        GtkWidget *region_menu = gtk_menu_new();
 
         /* Declaration/instantiation of the region menu items */
-        GtkWidget* region_menu_item_america = gtk_menu_item_new_with_label("America");
-        GtkWidget* region_menu_item_not_america = gtk_menu_item_new_with_label("Everywhere else");
+        GtkWidget *region_menu_item_america = gtk_menu_item_new_with_label("America");
+        GtkWidget *region_menu_item_not_america = gtk_menu_item_new_with_label("Everywhere else");
         
         /* Declaration/instantiation of the full disk button */
-        GtkWidget* full_button = gtk_button_new_with_label("Full disk mode (Recommended)");
+        GtkWidget *full_button = gtk_button_new_with_label("Full disk mode (Recommended)");
 
         /* Declaration/instantiation of the advanced install button */
-        GtkWidget* advanced_button = gtk_button_new_with_label("Advanced mode");
+        GtkWidget *advanced_button = gtk_button_new_with_label("Advanced mode");
 
         /* Assigns properties to the window */
         gtk_window_set_title(GTK_WINDOW(window), "solus-installer");
@@ -302,7 +302,7 @@ static void activate(GtkApplication* app, gpointer user_data)
 int main(int argc, char **argv)
 {
         /* Declaration of the GtkApplicaton and status */
-        GtkApplication* app;
+        GtkApplication *app;
         gint status;
 
         /* Instantiation of the GtkApplication and the status */
