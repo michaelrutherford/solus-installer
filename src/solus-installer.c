@@ -18,6 +18,7 @@
  */
 
 /* Imported header files */
+#include "disk.h"
 #include <gtk/gtk.h>
 #include <parted/parted.h>
 #include "solus-installer.h"
@@ -34,7 +35,7 @@ char* password;
 char* verified_password;
 
 /* Function to let the user go to the previous notebook page */
-static void previous_clicked(GtkWidget* notebook, gpointer user_data)
+void previous_clicked(GtkWidget* notebook, gpointer user_data)
 {
         if (DEBUG_MODE == TRUE) {
                 printf("Next page.\n");
@@ -49,22 +50,6 @@ void next_clicked(GtkWidget* notebook, gpointer user_data)
                 printf("Next page.\n");
         }
         gtk_notebook_next_page(GTK_NOTEBOOK (notebook));
-}
-
-/* Function to handle when the user chooses advanced mode */
-void advanced_clicked(GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Advanced mode entered.\n");
-        }
-}
-
-/* Function to handle when the user chooses full disk mode */
-void full_disk_clicked(GtkWidget* notebook, gpointer user_data)
-{
-        if (DEBUG_MODE == TRUE) {
-                printf("Full disk mode entered.\n");
-        }
 }
 
 /* Function to display an installation warning

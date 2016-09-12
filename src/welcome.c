@@ -49,7 +49,7 @@ void whats_new_clicked(GtkWidget* window, gpointer user_data)
 
         /* Declaration/instantiation of the changelog content area and text */
         GtkWidget* new_content_area = gtk_dialog_get_content_area(GTK_DIALOG (new_dialog));
-        GtkWidget* changelog_text = gtk_label_new("Solus Release 1.2");
+        GtkWidget* changelog_text = gtk_label_new("Solus Release X");
 
         /* Sets the dialog window size and adds */
         gtk_window_set_default_size(GTK_WINDOW(new_dialog), DIALOG_X, DIALOG_Y);
