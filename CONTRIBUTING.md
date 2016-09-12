@@ -3,13 +3,12 @@
 ## Coding Style ##
 
 * ### Bash ###
-
-  * #### Spacing ####
+  * __Spacing__
     * Indents are 2 spaces and tabs are forbidden.
 
 * ### C ###
 
-  * #### Comments ####
+  * __Comments__
     * Comments should be as short as possible and not contain jokes or vulgarity.
     * Avoid ending a comment in punctuation.
     * Comments must go on the line above the code or block of code that it documents.
@@ -17,13 +16,13 @@
     * Always begin comments with a capital letter.
     * Comments will always use the multiline comment syntax, even if it is only a single line.
 
-  * #### Conditionals ####
+  * __Conditionals__
     * Parentheses only need a space before them in conditional constructs.
     * Each case should be at the same indent level as the switch statement.
     * Else statements start on the same line as the closing curly brace of the if statement.
     * Single line if and else statements must have curly braces.
 
-  * #### Naming ####
+  * __Naming__
     * Camel case is strictly forbidden.
     * Underscores are used to separate words when naming variables or functions.
     * Variable and function names should not have more than 4 underscores in them.
@@ -33,7 +32,7 @@
     * Variable and function names must never contain jokes or vulgarity.
     * An underscore must never succeed another underscore in variable and function names.
 
-  * #### Spacing ####
+  * __Spacing__
     * Indents are 8 spaces and tabs are forbidden.
     * The 80 character limit is a guideline, not a rule.
     * If a line becomes too long, find ways to extend it vertically.
