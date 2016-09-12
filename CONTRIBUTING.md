@@ -4,13 +4,15 @@
 * Camel case is strictly forbidden.
 * Underscores are used to separate words when naming variables or functions.
 * Variable and function names should not have more than 4 underscores in them.
+* Variable and function names that require underscores must each underscore with letters or numbers.
+* An underscore must never succeed another underscore in variable and function names.
 * Indents are 8 spaces and tabs are forbidden.
 * Parentheses only need a space before them in conditional constructs.
 * Except for function declarations, curly braces always open on the same line.
 * Each case should be at the same indent level as the switch statement.
 * Stars in pointers are a prefix to the variable name, not a suffix to the type.
 * Always add function declarations to the relevant header files.
-* Else statements start on the same line as the if statements closing curly brace.
+* Else statements start on the same line as the closing curly brace of the if statement.
 * Comments should be as short as possible and not contain jokes or vulgarity.
 * Comments must go on the line above the code or block of code that it documents.
 * Comments will always use the multiline comment syntax, even if it is only a single line.
