@@ -1,13 +1,11 @@
 # Contributing #
 
 ## Coding Style ##
-
 * ### Bash ###
   * __Spacing__
     * Indents are 2 spaces and tabs are forbidden.
 
 * ### C ###
-
   * __Comments__
     * Comments should be as short as possible and not contain jokes or vulgarity.
     * Avoid ending a comment in punctuation.
@@ -15,6 +13,7 @@
     * Comments should not ever contain emoji.
     * Always begin comments with a capital letter.
     * Comments will always use the multiline comment syntax, even if it is only a single line.
+    * Comments must not contain references to religion, politics, or other personal beliefs.
 
   * __Conditionals__
     * Parentheses only need a space before them in conditional constructs.
@@ -27,7 +26,8 @@
     * Underscores are used to separate words when naming variables or functions.
     * Variable and function names should not have more than 4 underscores in them.
     * Stars in pointers are a prefix to the variable name, not a suffix to the type.
-    * Variable and function names that require underscores must each underscore with letters or numbers.
+    * Variable and function names must not contain references to religion, politics, or other personal beliefs.
+    * Variable and function names that require underscores must separate each underscore with letters or numbers.
     * Under no circumstances should variable or function names contain emoji.
     * Variable and function names must never contain jokes or vulgarity.
     * An underscore must never succeed another underscore in variable and function names.
@@ -44,12 +44,14 @@
 * The purpose of the commit should always be clearly defined in the commit message.
 * Don't group together large changes into one commit, break them up into multiple commits.
 * Do not end your commit message with punctuation.
+* Commit messages must not contain references to religion, politics, or other personal beliefs.
 * Never make jokes or use vulgar language in commit messages.
 
 ## Documentation ##
 * Under no circumstances should documentation contain emoji.
+* Documentation should not contain references to religion, politics, or other personal beliefs.
+* Never make jokes or use vulgar language in program documentation.
 
 ## Pull Requests ##
 * When making a pull request, make sure all of the rules specified in this file are followed.
 * If your pull request is denied or closed, do not re-open it unless asked to.
-
